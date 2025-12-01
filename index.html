@@ -34,10 +34,11 @@
             padding: 20px;
             color: var(--dark);
             line-height: 1.6;
+            overflow-y: auto;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             background-color: white;
             border-radius: 20px;
@@ -50,7 +51,7 @@
         header {
             background: linear-gradient(to right, var(--primary), var(--secondary));
             color: white;
-            padding: 30px 40px;
+            padding: 25px 40px;
             text-align: center;
         }
         
@@ -63,16 +64,16 @@
         }
         
         .logo i {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
         }
         
         h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             margin-bottom: 10px;
         }
         
         .subtitle {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             opacity: 0.9;
             max-width: 800px;
             margin: 0 auto;
@@ -81,8 +82,10 @@
         /* ===== ЭТАПЫ ТЕСТА ===== */
         .step {
             display: none;
-            padding: 40px;
+            padding: 30px 40px;
             animation: fadeIn 0.5s ease;
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
         }
         
         .step.active {
@@ -91,51 +94,46 @@
         
         .step-header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 25px;
         }
         
         .step-number {
             display: inline-block;
             background-color: var(--primary);
             color: white;
-            width: 40px;
-            height: 40px;
-            line-height: 40px;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
             border-radius: 50%;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
         }
         
         h2 {
-            font-size: 2rem;
+            font-size: 1.7rem;
             color: var(--secondary);
             margin-bottom: 10px;
         }
         
         .step-description {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--gray);
             margin-bottom: 10px;
-        }
-        
-        .step-subtitle {
-            font-style: italic;
-            color: var(--primary-light);
-            font-weight: 500;
         }
         
         /* ===== КАРТОЧКИ ===== */
         .cards-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
         }
         
         .card {
             background-color: white;
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 15px;
             box-shadow: var(--shadow);
             cursor: pointer;
             transition: var(--transition);
@@ -146,11 +144,12 @@
             flex-direction: column;
             align-items: center;
             height: 100%;
+            min-height: 220px;
         }
         
         .card:hover:not(.used):not(.selected) {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             border-color: var(--primary-light);
         }
         
@@ -175,10 +174,10 @@
         }
         
         .card-image {
-            width: 250px;
-            height: 250px;
-            margin-bottom: 20px;
-            border-radius: 10px;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 12px;
+            border-radius: 8px;
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -198,26 +197,27 @@
         }
         
         .card-title {
-            font-size: 1.5rem;
+            font-size: 1.1rem;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             color: var(--secondary);
             text-align: center;
             height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 0 5px;
         }
         
         .selected-badge {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 10px;
+            right: 10px;
             background-color: var(--primary);
             color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
             font-weight: bold;
             z-index: 10;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
@@ -234,13 +234,70 @@
             transform: translate(-50%, -50%);
             background-color: rgba(108, 117, 125, 0.9);
             color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            font-size: 1.2rem;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
             font-weight: bold;
             z-index: 20;
             text-align: center;
             width: 80%;
+        }
+        
+        /* ===== ПОЛЕ ДЛЯ ВВОДА КОММЕНТАРИЯ ===== */
+        .comment-container {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+            display: none;
+        }
+        
+        .comment-container.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .comment-container h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .comment-container h3 i {
+            color: var(--primary);
+        }
+        
+        .comment-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            line-height: 1.5;
+            resize: vertical;
+            min-height: 100px;
+            transition: var(--transition);
+        }
+        
+        .comment-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+        
+        .comment-input::placeholder {
+            color: #999;
+        }
+        
+        .comment-help {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-style: italic;
         }
         
         /* ===== КНОПКИ ===== */
@@ -249,13 +306,15 @@
             justify-content: space-between;
             align-items: center;
             margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
         }
         
         .btn {
-            padding: 15px 30px;
+            padding: 12px 25px;
             border: none;
             border-radius: 50px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
@@ -297,9 +356,9 @@
         }
         
         .progress-bar {
-            height: 10px;
+            height: 8px;
             background-color: #e9ecef;
-            border-radius: 5px;
+            border-radius: 4px;
             overflow: hidden;
         }
         
@@ -315,22 +374,25 @@
             margin-top: 5px;
             font-weight: 600;
             color: var(--gray);
+            font-size: 0.9rem;
         }
         
         /* ===== РЕЗУЛЬТАТЫ ===== */
         .results-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
         }
         
         .result-card {
             background-color: white;
-            border-radius: 15px;
-            padding: 30px;
+            border-radius: 12px;
+            padding: 25px;
             box-shadow: var(--shadow);
             border-top: 5px solid var(--primary);
+            display: flex;
+            flex-direction: column;
         }
         
         .result-header {
@@ -341,10 +403,10 @@
         }
         
         .result-icon {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: var(--primary);
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background-color: rgba(67, 97, 238, 0.1);
             border-radius: 50%;
             display: flex;
@@ -353,35 +415,26 @@
         }
         
         .result-title h3 {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             margin-bottom: 5px;
             color: var(--secondary);
         }
         
         .result-title p {
             color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         
-        .result-content h4 {
-            font-size: 1.5rem;
-            color: var(--dark);
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f0f0f0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .result-content {
+            flex-grow: 1;
         }
         
         .result-image {
-            width: 100px;
-            height: 100px;
-            border-radius: 10px;
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
             overflow: hidden;
-            margin-bottom: 15px;
-            float: left;
-            margin-right: 20px;
+            margin: 0 auto 15px;
         }
         
         .result-image img {
@@ -390,58 +443,50 @@
             object-fit: cover;
         }
         
-        .positive-list, .shadow-list {
-            margin-bottom: 20px;
-            clear: both;
+        .result-card-title {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            text-align: center;
         }
         
-        .positive-list h5, .shadow-list h5 {
-            font-size: 1.1rem;
+        .result-comment {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-light);
+        }
+        
+        .result-comment h4 {
+            font-size: 1rem;
             margin-bottom: 10px;
+            color: var(--secondary);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         
-        .positive-list h5 {
-            color: var(--success);
+        .result-comment h4 i {
+            color: var(--primary);
         }
         
-        .shadow-list h5 {
-            color: var(--danger);
+        .result-comment-text {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: var(--dark);
         }
         
-        .positive-list ul, .shadow-list ul {
-            list-style-type: none;
-            padding-left: 0;
-        }
-        
-        .positive-list li, .shadow-list li {
-            padding: 8px 0;
-            border-bottom: 1px dashed #eee;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .positive-list li:before {
-            content: "✓";
-            color: var(--success);
-            font-weight: bold;
-        }
-        
-        .shadow-list li:before {
-            content: "⚠";
-            color: var(--warning);
-            font-weight: bold;
+        .result-comment-text.empty {
+            color: var(--gray);
+            font-style: italic;
         }
         
         .share-results {
             background-color: #f8f9fa;
-            padding: 30px;
-            border-radius: 15px;
+            padding: 25px;
+            border-radius: 12px;
             text-align: center;
-            margin-top: 40px;
+            margin-top: 30px;
         }
         
         .share-buttons {
@@ -487,15 +532,16 @@
         /* ===== ФУТЕР ===== */
         footer {
             text-align: center;
-            padding: 30px;
+            padding: 25px;
             color: var(--gray);
             border-top: 1px solid #eee;
-            margin-top: 40px;
+            margin-top: 30px;
+            font-size: 0.9rem;
         }
         
         /* ===== АНИМАЦИИ ===== */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
@@ -512,22 +558,26 @@
         /* ===== АДАПТИВНОСТЬ ===== */
         @media (max-width: 1200px) {
             .cards-container {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .container {
+                max-width: 100%;
             }
         }
         
         @media (max-width: 992px) {
             .cards-container {
-                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                grid-template-columns: repeat(3, 1fr);
             }
             
             .card-image {
-                width: 200px;
-                height: 200px;
+                width: 130px;
+                height: 130px;
             }
             
             .results-container {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
         }
         
@@ -537,23 +587,21 @@
             }
             
             h1 {
-                font-size: 2rem;
+                font-size: 1.7rem;
             }
             
             .step {
                 padding: 20px;
+                max-height: none;
             }
             
             .cards-container {
-                grid-template-columns: 1fr;
-                max-width: 400px;
-                margin-left: auto;
-                margin-right: auto;
+                grid-template-columns: repeat(2, 1fr);
             }
             
             .card-image {
-                width: 250px;
-                height: 250px;
+                width: 140px;
+                height: 140px;
             }
             
             .buttons-container {
@@ -574,18 +622,28 @@
             .share-buttons {
                 flex-direction: column;
             }
+            
+            .results-container {
+                grid-template-columns: 1fr;
+            }
         }
         
         @media (max-width: 480px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+                max-width: 300px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
             .card-image {
-                width: 200px;
-                height: 200px;
+                width: 180px;
+                height: 180px;
             }
             
             .result-image {
-                width: 80px;
-                height: 80px;
-                margin-right: 15px;
+                width: 100px;
+                height: 100px;
             }
         }
     </style>
@@ -598,7 +656,7 @@
                 <i class="fas fa-crown"></i>
                 <h1>Тест на стиль руководства</h1>
             </div>
-            <p class="subtitle">Выберите метафоры, которые лучше всего описывают вас как руководителя, вашу команду и ваши сильные стороны. После прохождения теста вы получите детальную интерпретацию.</p>
+            <p class="subtitle">Выберите метафоры, которые лучше всего описывают вас как руководителя, вашу команду и ваши сильные стороны. Объясните, почему вы выбрали каждую карточку.</p>
         </header>
         
         <!-- ИНСТРУКЦИЯ -->
@@ -610,34 +668,34 @@
             </div>
             
             <div style="max-width: 800px; margin: 0 auto;">
-                <div style="background-color: #f8f9fa; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                <div style="background-color: #f8f9fa; padding: 25px; border-radius: 12px; margin-bottom: 25px;">
                     <h3 style="color: var(--secondary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
                         <i class="fas fa-info-circle"></i> Как это работает
                     </h3>
                     <ul style="list-style-type: none; padding-left: 0;">
-                        <li style="padding: 15px; border-bottom: 1px dashed #ddd; display: flex; align-items: center; gap: 15px;">
-                            <div style="background-color: var(--primary); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">1</div>
+                        <li style="padding: 12px; border-bottom: 1px dashed #ddd; display: flex; align-items: center; gap: 15px;">
+                            <div style="background-color: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">1</div>
                             <div>
                                 <strong>Выберите 5 карточек</strong> из 15 предложенных
                             </div>
                         </li>
-                        <li style="padding: 15px; border-bottom: 1px dashed #ddd; display: flex; align-items: center; gap: 15px;">
-                            <div style="background-color: var(--primary); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">2</div>
+                        <li style="padding: 12px; border-bottom: 1px dashed #ddd; display: flex; align-items: center; gap: 15px;">
+                            <div style="background-color: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">2</div>
                             <div>
-                                <strong>Каждая выбранная карточка становится серой</strong> и помечается как "выбрано"
+                                <strong>Объясните свой выбор</strong> для каждой карточки
                             </div>
                         </li>
-                        <li style="padding: 15px; display: flex; align-items: center; gap: 15px;">
-                            <div style="background-color: var(--primary); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">3</div>
+                        <li style="padding: 12px; display: flex; align-items: center; gap: 15px;">
+                            <div style="background-color: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">3</div>
                             <div>
-                                <strong>Получите персонализированную интерпретацию</strong> с сильными сторонами и зонами роста
+                                <strong>Получите сводку</strong> своих выборов и комментариев
                             </div>
                         </li>
                     </ul>
                 </div>
                 
                 <div style="text-align: center;">
-                    <button id="start-btn" class="btn btn-primary pulse" style="padding: 20px 50px; font-size: 1.3rem;">
+                    <button id="start-btn" class="btn btn-primary pulse" style="padding: 15px 40px; font-size: 1.2rem;">
                         <i class="fas fa-play-circle"></i> Начать тест
                     </button>
                 </div>
@@ -652,7 +710,7 @@
             <div class="step-header">
                 <div class="step-number"><i class="fas fa-chart-bar"></i></div>
                 <h2>Ваши результаты</h2>
-                <p class="step-description">Анализ выбранных вами метафор и их интерпретация</p>
+                <p class="step-description">Сводка ваших выборов и комментариев</p>
             </div>
             
             <div id="results-container"></div>
@@ -676,7 +734,7 @@
         </section>
         
         <!-- ПРОГРЕСС-БАР И КНОПКИ НАВИГАЦИИ -->
-        <div id="navigation" style="display: none; padding: 0 40px 40px;">
+        <div id="navigation" style="display: none; padding: 0 40px 30px;">
             <div class="buttons-container">
                 <button id="prev-btn" class="btn btn-secondary">
                     <i class="fas fa-arrow-left"></i> Назад
@@ -698,7 +756,7 @@
         <!-- ФУТЕР -->
         <footer>
             <p>© Лучший отдел обучения. Все метафоры являются символическими и предназначены для саморефлексии.</p>
-            <p style="margin-top: 10px; font-size: 0.9rem;">Разработано для развития лидерских качеств</p>
+            <p style="margin-top: 10px; font-size: 0.85rem;">Разработано для развития лидерских качеств</p>
         </footer>
     </div>
 
@@ -710,122 +768,77 @@
             {
                 id: 1,
                 title: "Горная вершина",
-                image: "images/1.png", // Ваша картинка 250x250px
-                keywords: ["амбиции", "достижения", "одиночество", "целеустремленность"],
-                positive: ["Целеустремленность", "Амбиции", "Достижения"],
-                shadow: ["Одиночество", "Оторванность от команды", "Завышенные ожидания"]
+                image: "images/1.png",
             },
             {
                 id: 2,
                 title: "Бурное море",
                 image: "images/2.png",
-                keywords: ["стресс", "хаос", "неконтролируемые эмоции", "энергия"],
-                positive: ["Энергия", "Движение", "Страсть"],
-                shadow: ["Стресс", "Нестабильность", "Хаос"]
             },
             {
                 id: 3,
                 title: "Спокойное озеро",
                 image: "images/3.png",
-                keywords: ["гармония", "стабильность", "удовлетворенность", "застой"],
-                positive: ["Гармония", "Стабильность", "Глубина"],
-                shadow: ["Застой", "Отсутствие развития", "Рутина"]
             },
             {
                 id: 4,
                 title: "Мост через пропасть",
                 image: "images/4.png",
-                keywords: ["коммуникация", "преодоление", "риск", "соединение"],
-                positive: ["Коммуникация", "Соединение", "Преодоление разрывов"],
-                shadow: ["Риск", "Напряжение", "Необходимость преодоления"]
             },
             {
                 id: 5,
                 title: "Маяк",
                 image: "images/5.png",
-                keywords: ["направление", "ориентир", "надежда", "изоляция"],
-                positive: ["Направление", "Ориентир", "Безопасность"],
-                shadow: ["Изоляция", "Дистанция", "Необходимость быть всегда начеку"]
             },
             {
                 id: 6,
                 title: "Крепость с стенами",
                 image: "images/6.png",
-                keywords: ["защита", "границы", "закрытость", "безопасность"],
-                positive: ["Защита", "Безопасность", "Стабильность"],
-                shadow: ["Закрытость", "Недоверие", "Барьеры в общении"]
             },
             {
                 id: 7,
                 title: "Строящийся дом",
                 image: "images/7.png",
-                keywords: ["развитие", "незавершенность", "потенциал", "процесс"],
-                positive: ["Развитие", "Потенциал", "Рост"],
-                shadow: ["Незавершенность", "Нестабильность", "Хаос"]
             },
             {
                 id: 8,
                 title: "Дирижер оркестра",
                 image: "images/8.png",
-                keywords: ["координация", "гармония", "контроль", "влияние"],
-                positive: ["Координация", "Гармония", "Контроль", "Влияние"],
-                shadow: ["Чрезмерный контроль", "Централизация", "Отсутствие автономии у команды"]
             },
             {
                 id: 9,
                 title: "Лев со своей прайдом",
                 image: "images/9.png",
-                keywords: ["лидерство", "защита", "доминирование", "семья"],
-                positive: ["Лидерство", "Защита", "Забота о команде"],
-                shadow: ["Доминирование", "Авторитарность", "Подавление инициативы"]
             },
             {
                 id: 10,
                 title: "Стая птиц в полете",
                 image: "images/10.png",
-                keywords: ["слаженность", "коллективный разум", "свобода", "порядок"],
-                positive: ["Слаженность", "Коллективный разум", "Самоорганизация"],
-                shadow: ["Потеря индивидуальности", "Групповое мышление", "Отсутствие лидерства"]
             },
             {
                 id: 11,
                 title: "Паззл",
                 image: "images/11.png",
-                keywords: ["системность", "решение проблем", "целостность", "сложность"],
-                positive: ["Системность", "Решение проблем", "Видение целого"],
-                shadow: ["Сложность", "Зацикленность на деталях", "Невозможность увидеть общую картину"]
             },
             {
                 id: 12,
                 title: "Компас",
                 image: "images/12.png",
-                keywords: ["поиск пути", "ориентация", "неопределенность", "выбор"],
-                positive: ["Ориентация", "Поиск пути", "Надежда"],
-                shadow: ["Неопределенность", "Поиск без результата", "Зависимость от внешних ориентиров"]
             },
             {
                 id: 13,
                 title: "Зажженная свеча",
                 image: "images/13.png",
-                keywords: ["вдохновение", "ограниченный ресурс", "свет", "жертвенность"],
-                positive: ["Вдохновение", "Свет", "Жертвенность", "Ресурс"],
-                shadow: ["Ограниченный ресурс", "Выгорание", "Конечность"]
             },
             {
                 id: 14,
                 title: "Разбитая ваза, склеенная золотом",
                 image: "images/14.png",
-                keywords: ["устойчивость", "принятие неидеальности", "красота в изъянах"],
-                positive: ["Устойчивость", "Принятие неидеальности", "Преобразование недостатков в достоинства"],
-                shadow: ["Хрупкость", "Прошлые травмы", "Необходимость бережного отношения"]
             },
             {
                 id: 15,
                 title: "Лабиринт",
                 image: "images/15.png",
-                keywords: ["поиск выхода", "запутанность", "испытание", "самоанализ"],
-                positive: ["Поиск", "Самоанализ", "Испытание"],
-                shadow: ["Запутанность", "Отсутствие выхода", "Отчаяние"]
             }
         ];
 
@@ -864,7 +877,7 @@
 
         // ===== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ =====
         let currentStep = 0;
-        let selectedCards = []; // Массив выбранных карточек {stepId, cardId, cardData}
+        let selectedCards = []; // Массив выбранных карточек {stepId, cardId, cardData, comment}
         let usedCardIds = new Set(); // Множество ID использованных карточек
 
         // ===== ИНИЦИАЛИЗАЦИЯ ТЕСТА =====
@@ -885,9 +898,29 @@
                         <p class="step-description">${step.description}</p>
                     </div>
                     <div id="cards-step-${step.id}" class="cards-container"></div>
+                    <div id="comment-step-${step.id}" class="comment-container">
+                        <h3><i class="fas fa-comment-dots"></i> Почему вы выбрали эту карточку?</h3>
+                        <textarea 
+                            id="comment-input-step-${step.id}" 
+                            class="comment-input" 
+                            placeholder="Объясните ваш выбор... Например: 'Я выбрал эту картинку, потому что...'"
+                            rows="3"
+                        ></textarea>
+                        <div class="comment-help">
+                            Постарайтесь описать, почему именно эта метафора лучше всего описывает ваш опыт или восприятие.
+                        </div>
+                    </div>
                 `;
                 
                 testStepsContainer.appendChild(stepElement);
+                
+                // Добавляем обработчик ввода комментария
+                const commentInput = document.getElementById(`comment-input-step-${step.id}`);
+                if (commentInput) {
+                    commentInput.addEventListener('input', function() {
+                        saveComment(step.id, this.value);
+                    });
+                }
             });
             
             // Показываем навигацию
@@ -912,9 +945,15 @@
             // Обновляем карточки для текущего шага
             renderCardsForStep(stepId);
             
+            // Обновляем комментарий для текущего шага
+            updateCommentForStep(stepId);
+            
             // Обновляем кнопки навигации
             updateNavigationButtons();
             updateProgress();
+            
+            // Прокручиваем к началу шага
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // ===== ОТОБРАЖЕНИЕ КАРТОЧЕК =====
@@ -967,8 +1006,11 @@
             // Находим текущий выбор для этого шага
             const currentSelectionIndex = selectedCards.findIndex(item => item.stepId === stepId);
             
-            // Если уже есть выбор для этого шага, удаляем его из usedCardIds
+            // Сохраняем старый комментарий, если он есть
+            let oldComment = '';
             if (currentSelectionIndex !== -1) {
+                oldComment = selectedCards[currentSelectionIndex].comment || '';
+                
                 const oldCardId = selectedCards[currentSelectionIndex].cardId;
                 // Проверяем, используется ли эта карточка на других шагах
                 const isUsedElsewhere = selectedCards.some(item => 
@@ -985,14 +1027,59 @@
             
             // Добавляем новый выбор
             const cardData = cardsData.find(card => card.id === cardId);
-            selectedCards.push({ stepId, cardId, cardData });
+            selectedCards.push({ 
+                stepId, 
+                cardId, 
+                cardData, 
+                comment: oldComment // Сохраняем старый комментарий, если был
+            });
             usedCardIds.add(cardId);
             
             // Обновляем отображение карточек
             renderCardsForStep(stepId);
             
+            // Показываем поле для комментария
+            const commentContainer = document.getElementById(`comment-step-${stepId}`);
+            if (commentContainer) {
+                commentContainer.classList.add('active');
+                
+                // Устанавливаем фокус на поле ввода
+                setTimeout(() => {
+                    const commentInput = document.getElementById(`comment-input-step-${stepId}`);
+                    if (commentInput) {
+                        commentInput.focus();
+                    }
+                }, 100);
+            }
+            
             // Активируем кнопку "Далее"
             document.getElementById('next-btn').disabled = false;
+        }
+
+        // ===== СОХРАНЕНИЕ КОММЕНТАРИЯ =====
+        function saveComment(stepId, comment) {
+            const selectionIndex = selectedCards.findIndex(item => item.stepId === stepId);
+            if (selectionIndex !== -1) {
+                selectedCards[selectionIndex].comment = comment;
+            }
+        }
+
+        // ===== ОБНОВЛЕНИЕ КОММЕНТАРИЯ ДЛЯ ШАГА =====
+        function updateCommentForStep(stepId) {
+            const commentContainer = document.getElementById(`comment-step-${stepId}`);
+            const commentInput = document.getElementById(`comment-input-step-${stepId}`);
+            
+            if (!commentContainer || !commentInput) return;
+            
+            const currentSelection = selectedCards.find(item => item.stepId === stepId);
+            
+            if (currentSelection) {
+                commentContainer.classList.add('active');
+                commentInput.value = currentSelection.comment || '';
+            } else {
+                commentContainer.classList.remove('active');
+                commentInput.value = '';
+            }
         }
 
         // ===== ОБНОВЛЕНИЕ НАВИГАЦИИ =====
@@ -1075,20 +1162,13 @@
                         <div class="result-image">
                             <img src="${selection.cardData.image}" alt="${selection.cardData.title}" />
                         </div>
-                        <h4>${selection.cardData.title}</h4>
+                        <div class="result-card-title">${selection.cardData.title}</div>
                         
-                        <div class="positive-list">
-                            <h5><i class="fas fa-plus-circle"></i> Сильные стороны (Позитив)</h5>
-                            <ul>
-                                ${selection.cardData.positive.map(item => `<li>${item}</li>`).join('')}
-                            </ul>
-                        </div>
-                        
-                        <div class="shadow-list">
-                            <h5><i class="fas fa-exclamation-triangle"></i> Зоны роста (Тень)</h5>
-                            <ul>
-                                ${selection.cardData.shadow.map(item => `<li>${item}</li>`).join('')}
-                            </ul>
+                        <div class="result-comment">
+                            <h4><i class="fas fa-comment"></i> Ваш комментарий:</h4>
+                            <div class="result-comment-text ${!selection.comment ? 'empty' : ''}">
+                                ${selection.comment || 'Комментарий не был добавлен'}
+                            </div>
                         </div>
                     </div>
                 `;
@@ -1112,8 +1192,7 @@
                 
                 resultsText += `${stepInfo.title} (${stepInfo.description}):\n`;
                 resultsText += `► ${selection.cardData.title}\n`;
-                resultsText += `  Сильные стороны: ${selection.cardData.positive.join(', ')}\n`;
-                resultsText += `  Зоны роста: ${selection.cardData.shadow.join(', ')}\n\n`;
+                resultsText += `  Комментарий: ${selection.comment || 'Комментарий не был добавлен'}\n\n`;
             });
             
             navigator.clipboard.writeText(resultsText).then(() => {
