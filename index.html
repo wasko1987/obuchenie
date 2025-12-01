@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест на стиль руководства</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== ОСНОВНЫЕ СТИЛИ ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #4361ee;
+            --primary-light: #4895ef;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #f8961e;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            min-height: 90vh;
+        }
+        
+        /* ===== ШАПКА ===== */
+        header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* ===== ЭТАПЫ ТЕСТА ===== */
+        .step {
+            display: none;
+            padding: 40px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .step.active {
+            display: block;
+        }
+        
+        .step-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .step-description {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        
+        .step-subtitle {
+            font-style: italic;
+            color: var(--primary-light);
+            font-weight: 500;
+        }
+        
+        /* ===== КАРТОЧКИ ===== */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+        }
+        
+        .card:hover:not(.used):not(.selected) {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-light);
+        }
+        
+        .card.selected {
+            border-color: var(--primary);
+            background-color: #f0f7ff;
+        }
+        
+        .card.used {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: #f8f9fa;
+            filter: grayscale(80%);
+        }
+        
+        .card.used .card-image {
+            filter: grayscale(100%);
+        }
+        
+        .card.used .card-title {
+            color: #999;
+        }
+        
+        .card-image {
+            width: 250px;
+            height: 250px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
+        }
+        
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .card.selected .card-image img {
+            transform: scale(1.05);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--secondary);
+            text-align: center;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .selected-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--primary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .card.used .selected-badge {
+            background-color: var(--gray);
+        }
+        
+        .used-badge {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(108, 117, 125, 0.9);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            z-index: 20;
+            text-align: center;
+            width: 80%;
+        }
+        
+        /* ===== КНОПКИ ===== */
+        .buttons-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        .progress-container {
+            flex-grow: 1;
+            margin: 0 30px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--success));
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            text-align: center;
+            margin-top: 5px;
+            font-weight: 600;
+            color: var(--gray);
+        }
+        
+        /* ===== РЕЗУЛЬТАТЫ ===== */
+        .results-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .result-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--primary);
+        }
+        
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .result-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            width: 60px;
+            height: 60px;
+            background-color: rgba(67, 97, 238, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .result-title h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: var(--secondary);
+        }
+        
+        .result-title p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .result-content h4 {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .result-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            float: left;
+            margin-right: 20px;
+        }
+        
+        .result-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .positive-list, .shadow-list {
+            margin-bottom: 20px;
+            clear: both;
+        }
+        
+        .positive-list h5, .shadow-list h5 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .positive-list h5 {
+            color: var(--success);
+        }
+        
+        .shadow-list h5 {
+            color: var(--danger);
+        }
+        
+        .positive-list ul, .shadow-list ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .positive-list li, .shadow-list li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .positive-list li:before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+        }
+        
+        .shadow-list li:before {
+            content: "⚠";
+            color: var(--warning);
+            font-weight: bold;
+        }
+        
+        .share-results {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .share-btn {
+            padding: 12px 25px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+        
+        .share-btn.copy {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .share-btn.pdf {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .share-btn.restart {
+            background-color: var(--warning);
+            color: white;
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* ===== ФУТЕР ===== */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--gray);
+            border-top: 1px solid #eee;
+            margin-top: 40px;
+        }
+        
+        /* ===== АНИМАЦИИ ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* ===== АДАПТИВНОСТЬ ===== */
+        @media (max-width: 1200px) {
+            .cards-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .cards-container {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+            
+            .card-image {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .results-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .step {
+                padding: 20px;
+            }
+            
+            .cards-container {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .card-image {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .buttons-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .progress-container {
+                margin: 0;
+                width: 100%;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .share-buttons {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .card-image {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .result-image {
+                width: 80px;
+                height: 80px;
+                margin-right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ШАПКА -->
+        <header>
+            <div class="logo">
+                <i class="fas fa-crown"></i>
+                <h1>Тест на стиль руководства</h1>
+            </div>
+            <p class="subtitle">Выберите метафоры, которые лучше всего описывают вас как руководителя, вашу команду и ваши сильные стороны. После прохождения теста вы получите детальную интерпретацию.</p>
+        </header>
+        
+        <!-- ИНСТРУКЦИЯ -->
+        <section id="step0" class="step active">
+            <div class="step-header">
+                <div class="step-number">?</div>
+                <h2>Добро пожаловать!</h2>
+                <p class="step-description">Этот тест поможет вам лучше понять свой стиль руководства через метафоры</p>
+            </div>
+            
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div style="background-color: #f8f9fa; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: var(--secondary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-info-circle"></i> Как это работает
+                    </h3>
+                    <ul style="list-style-type: none; padding-left: 0;">
+                        <li style="padding: 15px; border-bottom: 1px dashed #ddd; display: flex; align-items: center; gap: 15px;">
+                            <div style="background-color: var(--primary); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">1</div>
+                            <div>
+                                <strong>Выберите 5 карточек</strong> из 15 предложенных
+                            </div>
+                        </li>
+                        <li style="padding: 15px; border-bottom: 1px dashed #ddd; display: flex; align-items: center; gap: 15px;">
+                            <div style="background-color: var(--primary); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">2</div>
+                            <div>
+                                <strong>Каждая выбранная карточка становится серой</strong> и помечается как "выбрано"
+                            </div>
+                        </li>
+                        <li style="padding: 15px; display: flex; align-items: center; gap: 15px;">
+                            <div style="background-color: var(--primary); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">3</div>
+                            <div>
+                                <strong>Получите персонализированную интерпретацию</strong> с сильными сторонами и зонами роста
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button id="start-btn" class="btn btn-primary pulse" style="padding: 20px 50px; font-size: 1.3rem;">
+                        <i class="fas fa-play-circle"></i> Начать тест
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ШАГИ ТЕСТА 1-5 (будут сгенерированы JavaScript) -->
+        <div id="test-steps"></div>
+        
+        <!-- РЕЗУЛЬТАТЫ -->
+        <section id="results-step" class="step">
+            <div class="step-header">
+                <div class="step-number"><i class="fas fa-chart-bar"></i></div>
+                <h2>Ваши результаты</h2>
+                <p class="step-description">Анализ выбранных вами метафор и их интерпретация</p>
+            </div>
+            
+            <div id="results-container"></div>
+            
+            <div class="share-results">
+                <h3 style="margin-bottom: 15px;">Поделиться результатами</h3>
+                <p style="color: var(--gray); margin-bottom: 20px;">Сохраните или отправьте результаты теста</p>
+                
+                <div class="share-buttons">
+                    <button id="copy-results" class="share-btn copy">
+                        <i class="far fa-copy"></i> Копировать текст
+                    </button>
+                    <button id="save-pdf" class="share-btn pdf">
+                        <i class="far fa-file-pdf"></i> Сохранить как PDF
+                    </button>
+                    <button id="restart-test" class="share-btn restart">
+                        <i class="fas fa-redo"></i> Пройти еще раз
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ПРОГРЕСС-БАР И КНОПКИ НАВИГАЦИИ -->
+        <div id="navigation" style="display: none; padding: 0 40px 40px;">
+            <div class="buttons-container">
+                <button id="prev-btn" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Назад
+                </button>
+                
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                    <div id="progress-text" class="progress-text">Шаг 1 из 5</div>
+                </div>
+                
+                <button id="next-btn" class="btn btn-primary" disabled>
+                    Далее <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- ФУТЕР -->
+        <footer>
+            <p>© Лучший отдел обучения. Все метафоры являются символическими и предназначены для саморефлексии.</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">Разработано для развития лидерских качеств</p>
+        </footer>
+    </div>
+
+    <script>
+        // ===== ДАННЫЕ ТЕСТА =====
+        // Картинки должны называться: 1.png, 2.png, ..., 15.png
+        // и находиться в папке images/ рядом с HTML файлом
+        const cardsData = [
+            {
+                id: 1,
+                title: "Горная вершина",
+                image: "images/1.png", // Ваша картинка 250x250px
+                keywords: ["амбиции", "достижения", "одиночество", "целеустремленность"],
+                positive: ["Целеустремленность", "Амбиции", "Достижения"],
+                shadow: ["Одиночество", "Оторванность от команды", "Завышенные ожидания"]
+            },
+            {
+                id: 2,
+                title: "Бурное море",
+                image: "images/2.png",
+                keywords: ["стресс", "хаос", "неконтролируемые эмоции", "энергия"],
+                positive: ["Энергия", "Движение", "Страсть"],
+                shadow: ["Стресс", "Нестабильность", "Хаос"]
+            },
+            {
+                id: 3,
+                title: "Спокойное озеро",
+                image: "images/3.png",
+                keywords: ["гармония", "стабильность", "удовлетворенность", "застой"],
+                positive: ["Гармония", "Стабильность", "Глубина"],
+                shadow: ["Застой", "Отсутствие развития", "Рутина"]
+            },
+            {
+                id: 4,
+                title: "Мост через пропасть",
+                image: "images/4.png",
+                keywords: ["коммуникация", "преодоление", "риск", "соединение"],
+                positive: ["Коммуникация", "Соединение", "Преодоление разрывов"],
+                shadow: ["Риск", "Напряжение", "Необходимость преодоления"]
+            },
+            {
+                id: 5,
+                title: "Маяк",
+                image: "images/5.png",
+                keywords: ["направление", "ориентир", "надежда", "изоляция"],
+                positive: ["Направление", "Ориентир", "Безопасность"],
+                shadow: ["Изоляция", "Дистанция", "Необходимость быть всегда начеку"]
+            },
+            {
+                id: 6,
+                title: "Крепость с стенами",
+                image: "images/6.png",
+                keywords: ["защита", "границы", "закрытость", "безопасность"],
+                positive: ["Защита", "Безопасность", "Стабильность"],
+                shadow: ["Закрытость", "Недоверие", "Барьеры в общении"]
+            },
+            {
+                id: 7,
+                title: "Строящийся дом",
+                image: "images/7.png",
+                keywords: ["развитие", "незавершенность", "потенциал", "процесс"],
+                positive: ["Развитие", "Потенциал", "Рост"],
+                shadow: ["Незавершенность", "Нестабильность", "Хаос"]
+            },
+            {
+                id: 8,
+                title: "Дирижер оркестра",
+                image: "images/8.png",
+                keywords: ["координация", "гармония", "контроль", "влияние"],
+                positive: ["Координация", "Гармония", "Контроль", "Влияние"],
+                shadow: ["Чрезмерный контроль", "Централизация", "Отсутствие автономии у команды"]
+            },
+            {
+                id: 9,
+                title: "Лев со своей прайдом",
+                image: "images/9.png",
+                keywords: ["лидерство", "защита", "доминирование", "семья"],
+                positive: ["Лидерство", "Защита", "Забота о команде"],
+                shadow: ["Доминирование", "Авторитарность", "Подавление инициативы"]
+            },
+            {
+                id: 10,
+                title: "Стая птиц в полете",
+                image: "images/10.png",
+                keywords: ["слаженность", "коллективный разум", "свобода", "порядок"],
+                positive: ["Слаженность", "Коллективный разум", "Самоорганизация"],
+                shadow: ["Потеря индивидуальности", "Групповое мышление", "Отсутствие лидерства"]
+            },
+            {
+                id: 11,
+                title: "Паззл",
+                image: "images/11.png",
+                keywords: ["системность", "решение проблем", "целостность", "сложность"],
+                positive: ["Системность", "Решение проблем", "Видение целого"],
+                shadow: ["Сложность", "Зацикленность на деталях", "Невозможность увидеть общую картину"]
+            },
+            {
+                id: 12,
+                title: "Компас",
+                image: "images/12.png",
+                keywords: ["поиск пути", "ориентация", "неопределенность", "выбор"],
+                positive: ["Ориентация", "Поиск пути", "Надежда"],
+                shadow: ["Неопределенность", "Поиск без результата", "Зависимость от внешних ориентиров"]
+            },
+            {
+                id: 13,
+                title: "Зажженная свеча",
+                image: "images/13.png",
+                keywords: ["вдохновение", "ограниченный ресурс", "свет", "жертвенность"],
+                positive: ["Вдохновение", "Свет", "Жертвенность", "Ресурс"],
+                shadow: ["Ограниченный ресурс", "Выгорание", "Конечность"]
+            },
+            {
+                id: 14,
+                title: "Разбитая ваза, склеенная золотом",
+                image: "images/14.png",
+                keywords: ["устойчивость", "принятие неидеальности", "красота в изъянах"],
+                positive: ["Устойчивость", "Принятие неидеальности", "Преобразование недостатков в достоинства"],
+                shadow: ["Хрупкость", "Прошлые травмы", "Необходимость бережного отношения"]
+            },
+            {
+                id: 15,
+                title: "Лабиринт",
+                image: "images/15.png",
+                keywords: ["поиск выхода", "запутанность", "испытание", "самоанализ"],
+                positive: ["Поиск", "Самоанализ", "Испытание"],
+                shadow: ["Запутанность", "Отсутствие выхода", "Отчаяние"]
+            }
+        ];
+
+        const testSteps = [
+            {
+                id: 1,
+                title: "Я как руководитель",
+                description: "Как я себя ощущаю в роли сейчас",
+                icon: "fas fa-user-tie"
+            },
+            {
+                id: 2,
+                title: "Моя команда",
+                description: "Как я вижу свою группу операторов",
+                icon: "fas fa-users"
+            },
+            {
+                id: 3,
+                title: "Моя Суперсила",
+                description: "Качество, которое помогает больше всего",
+                icon: "fas fa-bolt"
+            },
+            {
+                id: 4,
+                title: "Мое Слепое пятно",
+                description: "То, что я не всегда замечаю, но что мешает",
+                icon: "fas fa-eye-slash"
+            },
+            {
+                id: 5,
+                title: "Мой идеальный стиль руководства",
+                description: "К чему я стремлюсь",
+                icon: "fas fa-bullseye"
+            }
+        ];
+
+        // ===== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ =====
+        let currentStep = 0;
+        let selectedCards = []; // Массив выбранных карточек {stepId, cardId, cardData}
+        let usedCardIds = new Set(); // Множество ID использованных карточек
+
+        // ===== ИНИЦИАЛИЗАЦИЯ ТЕСТА =====
+        function initTest() {
+            // Генерируем шаги теста
+            const testStepsContainer = document.getElementById('test-steps');
+            testStepsContainer.innerHTML = '';
+            
+            testSteps.forEach(step => {
+                const stepElement = document.createElement('section');
+                stepElement.className = 'step';
+                stepElement.id = `step${step.id}`;
+                
+                stepElement.innerHTML = `
+                    <div class="step-header">
+                        <div class="step-number">${step.id}</div>
+                        <h2>${step.title}</h2>
+                        <p class="step-description">${step.description}</p>
+                    </div>
+                    <div id="cards-step-${step.id}" class="cards-container"></div>
+                `;
+                
+                testStepsContainer.appendChild(stepElement);
+            });
+            
+            // Показываем навигацию
+            document.getElementById('navigation').style.display = 'block';
+            
+            // Загружаем первый шаг
+            loadStep(1);
+            updateProgress();
+        }
+
+        // ===== ЗАГРУЗКА ШАГА =====
+        function loadStep(stepId) {
+            // Скрываем все шаги
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active');
+            });
+            
+            // Показываем текущий шаг
+            document.getElementById(`step${stepId}`).classList.add('active');
+            currentStep = stepId;
+            
+            // Обновляем карточки для текущего шага
+            renderCardsForStep(stepId);
+            
+            // Обновляем кнопки навигации
+            updateNavigationButtons();
+            updateProgress();
+        }
+
+        // ===== ОТОБРАЖЕНИЕ КАРТОЧЕК =====
+        function renderCardsForStep(stepId) {
+            const container = document.getElementById(`cards-step-${stepId}`);
+            container.innerHTML = '';
+            
+            // Находим карточку, выбранную для текущего шага
+            const currentSelection = selectedCards.find(item => item.stepId === stepId);
+            
+            cardsData.forEach(card => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card';
+                
+                // Проверяем, использована ли карточка на других шагах
+                const isUsed = usedCardIds.has(card.id) && (!currentSelection || currentSelection.cardId !== card.id);
+                
+                // Проверяем, выбрана ли карточка для текущего шага
+                const isSelected = currentSelection && currentSelection.cardId === card.id;
+                
+                if (isUsed) {
+                    cardElement.classList.add('used');
+                }
+                
+                if (isSelected) {
+                    cardElement.classList.add('selected');
+                }
+                
+                // Создаем HTML для карточки - ТОЛЬКО ИЗОБРАЖЕНИЕ И НАЗВАНИЕ
+                cardElement.innerHTML = `
+                    <div class="card-image">
+                        <img src="${card.image}" alt="${card.title}" />
+                        ${isUsed ? '<div class="used-badge">Выбрано</div>' : ''}
+                    </div>
+                    <div class="card-title">${card.title}</div>
+                    ${isSelected ? '<div class="selected-badge">Выбрано</div>' : ''}
+                `;
+                
+                // Добавляем обработчик клика, если карточка не использована или это текущий выбор
+                if (!isUsed || isSelected) {
+                    cardElement.addEventListener('click', () => selectCard(stepId, card.id));
+                }
+                
+                container.appendChild(cardElement);
+            });
+        }
+
+        // ===== ВЫБОР КАРТОЧКИ =====
+        function selectCard(stepId, cardId) {
+            // Находим текущий выбор для этого шага
+            const currentSelectionIndex = selectedCards.findIndex(item => item.stepId === stepId);
+            
+            // Если уже есть выбор для этого шага, удаляем его из usedCardIds
+            if (currentSelectionIndex !== -1) {
+                const oldCardId = selectedCards[currentSelectionIndex].cardId;
+                // Проверяем, используется ли эта карточка на других шагах
+                const isUsedElsewhere = selectedCards.some(item => 
+                    item.cardId === oldCardId && item.stepId !== stepId
+                );
+                
+                if (!isUsedElsewhere) {
+                    usedCardIds.delete(oldCardId);
+                }
+                
+                // Удаляем старый выбор
+                selectedCards.splice(currentSelectionIndex, 1);
+            }
+            
+            // Добавляем новый выбор
+            const cardData = cardsData.find(card => card.id === cardId);
+            selectedCards.push({ stepId, cardId, cardData });
+            usedCardIds.add(cardId);
+            
+            // Обновляем отображение карточек
+            renderCardsForStep(stepId);
+            
+            // Активируем кнопку "Далее"
+            document.getElementById('next-btn').disabled = false;
+        }
+
+        // ===== ОБНОВЛЕНИЕ НАВИГАЦИИ =====
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            // Кнопка "Назад"
+            if (currentStep === 1) {
+                prevBtn.disabled = true;
+            } else {
+                prevBtn.disabled = false;
+            }
+            
+            // Кнопка "Далее"
+            const hasSelection = selectedCards.some(item => item.stepId === currentStep);
+            if (hasSelection) {
+                nextBtn.disabled = false;
+            } else {
+                nextBtn.disabled = true;
+            }
+            
+            // Текст на кнопке "Далее"
+            if (currentStep === testSteps.length) {
+                nextBtn.innerHTML = `Завершить <i class="fas fa-check"></i>`;
+            } else {
+                nextBtn.innerHTML = `Далее <i class="fas fa-arrow-right"></i>`;
+            }
+        }
+
+        // ===== ОБНОВЛЕНИЕ ПРОГРЕССА =====
+        function updateProgress() {
+            const progressFill = document.getElementById('progress-fill');
+            const progressText = document.getElementById('progress-text');
+            
+            const progressPercentage = (currentStep / testSteps.length) * 100;
+            progressFill.style.width = `${progressPercentage}%`;
+            
+            // Подсчитываем количество завершенных шагов
+            const completedSteps = selectedCards.filter(item => item.stepId <= currentStep).length;
+            progressText.textContent = `Шаг ${currentStep} из ${testSteps.length} (выбрано: ${completedSteps})`;
+        }
+
+        // ===== ПОКАЗ РЕЗУЛЬТАТОВ =====
+        function showResults() {
+            // Скрываем все шаги и навигацию
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active');
+            });
+            document.getElementById('navigation').style.display = 'none';
+            
+            // Показываем шаг с результатами
+            document.getElementById('results-step').classList.add('active');
+            
+            // Генерируем результаты
+            const resultsContainer = document.getElementById('results-container');
+            resultsContainer.innerHTML = '';
+            
+            // Сортируем выборы по stepId
+            const sortedSelections = selectedCards.sort((a, b) => a.stepId - b.stepId);
+            
+            sortedSelections.forEach(selection => {
+                const stepInfo = testSteps.find(step => step.id === selection.stepId);
+                
+                const resultCard = document.createElement('div');
+                resultCard.className = 'result-card';
+                
+                resultCard.innerHTML = `
+                    <div class="result-header">
+                        <div class="result-icon">
+                            <i class="${stepInfo.icon}"></i>
+                        </div>
+                        <div class="result-title">
+                            <h3>${stepInfo.title}</h3>
+                            <p>${stepInfo.description}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="result-content">
+                        <div class="result-image">
+                            <img src="${selection.cardData.image}" alt="${selection.cardData.title}" />
+                        </div>
+                        <h4>${selection.cardData.title}</h4>
+                        
+                        <div class="positive-list">
+                            <h5><i class="fas fa-plus-circle"></i> Сильные стороны (Позитив)</h5>
+                            <ul>
+                                ${selection.cardData.positive.map(item => `<li>${item}</li>`).join('')}
+                            </ul>
+                        </div>
+                        
+                        <div class="shadow-list">
+                            <h5><i class="fas fa-exclamation-triangle"></i> Зоны роста (Тень)</h5>
+                            <ul>
+                                ${selection.cardData.shadow.map(item => `<li>${item}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                
+                resultsContainer.appendChild(resultCard);
+            });
+            
+            // Прокручиваем к началу результатов
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ===== КОПИРОВАНИЕ РЕЗУЛЬТАТОВ =====
+        function copyResultsToClipboard() {
+            let resultsText = "Мои результаты теста на стиль руководства:\n\n";
+            
+            // Сортируем выборы по stepId
+            const sortedSelections = selectedCards.sort((a, b) => a.stepId - b.stepId);
+            
+            sortedSelections.forEach(selection => {
+                const stepInfo = testSteps.find(step => step.id === selection.stepId);
+                
+                resultsText += `${stepInfo.title} (${stepInfo.description}):\n`;
+                resultsText += `► ${selection.cardData.title}\n`;
+                resultsText += `  Сильные стороны: ${selection.cardData.positive.join(', ')}\n`;
+                resultsText += `  Зоны роста: ${selection.cardData.shadow.join(', ')}\n\n`;
+            });
+            
+            navigator.clipboard.writeText(resultsText).then(() => {
+                alert('Результаты скопированы в буфер обмена!');
+            });
+        }
+
+        // ===== СОХРАНЕНИЕ КАК PDF =====
+        function saveAsPDF() {
+            alert('В реальном приложении здесь была бы генерация PDF. Для демо просто копируем результаты.');
+            copyResultsToClipboard();
+        }
+
+        // ===== ПЕРЕЗАПУСК ТЕСТА =====
+        function restartTest() {
+            // Сброс переменных
+            currentStep = 0;
+            selectedCards = [];
+            usedCardIds.clear();
+            
+            // Возвращаем к началу
+            document.getElementById('results-step').classList.remove('active');
+            document.getElementById('step0').classList.add('active');
+            document.getElementById('navigation').style.display = 'none';
+            
+            // Прокручиваем к началу
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ===== ОБРАБОТЧИКИ СОБЫТИЙ =====
+        document.addEventListener('DOMContentLoaded', () => {
+            // Кнопка "Начать тест"
+            document.getElementById('start-btn').addEventListener('click', () => {
+                document.getElementById('step0').classList.remove('active');
+                initTest();
+            });
+            
+            // Кнопка "Назад"
+            document.getElementById('prev-btn').addEventListener('click', () => {
+                if (currentStep > 1) {
+                    loadStep(currentStep - 1);
+                }
+            });
+            
+            // Кнопка "Далее"
+            document.getElementById('next-btn').addEventListener('click', () => {
+                if (currentStep < testSteps.length) {
+                    loadStep(currentStep + 1);
+                } else {
+                    showResults();
+                }
+            });
+            
+            // Кнопка "Копировать результаты"
+            document.getElementById('copy-results').addEventListener('click', copyResultsToClipboard);
+            
+            // Кнопка "Сохранить как PDF"
+            document.getElementById('save-pdf').addEventListener('click', saveAsPDF);
+            
+            // Кнопка "Пройти еще раз"
+            document.getElementById('restart-test').addEventListener('click', restartTest);
+            
+            // Обработка клавиш
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft' && currentStep > 1) {
+                    loadStep(currentStep - 1);
+                } else if (e.key === 'ArrowRight' && currentStep <= testSteps.length && !document.getElementById('next-btn').disabled) {
+                    if (currentStep < testSteps.length) {
+                        loadStep(currentStep + 1);
+                    } else {
+                        showResults();
+                    }
+                } else if (e.key === 'Enter' && !document.getElementById('next-btn').disabled) {
+                    if (currentStep < testSteps.length) {
+                        loadStep(currentStep + 1);
+                    } else {
+                        showResults();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
