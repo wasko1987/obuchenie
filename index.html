@@ -122,69 +122,6 @@
             margin-bottom: 10px;
         }
         
-        /* ===== АРХЕТИПЫ ===== */
-        .archetypes-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-            margin-bottom: 30px;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        @media (max-width: 768px) {
-            .archetypes-container {
-                grid-template-columns: 1fr;
-                max-width: 400px;
-            }
-        }
-        
-        .archetype-card {
-            background-color: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: var(--shadow);
-            cursor: pointer;
-            transition: var(--transition);
-            border: 3px solid transparent;
-            position: relative;
-            text-align: center;
-        }
-        
-        .archetype-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .archetype-card.selected {
-            border-color: var(--primary);
-            background-color: #f0f7ff;
-        }
-        
-        .archetype-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-        
-        .archetype-card:nth-child(1) .archetype-icon { color: #f72585; } /* Мотиватор */
-        .archetype-card:nth-child(2) .archetype-icon { color: #4361ee; } /* Стратег */
-        .archetype-card:nth-child(3) .archetype-icon { color: #4cc9f0; } /* Опекун */
-        .archetype-card:nth-child(4) .archetype-icon { color: #f8961e; } /* Инспектор */
-        
-        .archetype-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--secondary);
-        }
-        
-        .archetype-description {
-            font-size: 0.95rem;
-            color: var(--gray);
-            line-height: 1.5;
-        }
-        
         /* ===== КАРТОЧКИ ===== */
         .cards-container {
             display: grid;
@@ -442,34 +379,30 @@
         
         /* ===== РЕЗУЛЬТАТЫ ===== */
         .results-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
             margin-top: 30px;
         }
         
-        .results-section {
+        .result-card {
             background-color: white;
             border-radius: 12px;
             padding: 25px;
             box-shadow: var(--shadow);
-            margin-bottom: 25px;
             border-top: 5px solid var(--primary);
+            display: flex;
+            flex-direction: column;
         }
         
-        .results-section.archetype-section {
-            border-top-color: #f72585;
-        }
-        
-        .results-section.questions-section {
-            border-top-color: #4361ee;
-        }
-        
-        .section-header {
+        .result-header {
             display: flex;
             align-items: center;
             gap: 15px;
             margin-bottom: 20px;
         }
         
-        .section-icon {
+        .result-icon {
             font-size: 1.8rem;
             color: var(--primary);
             width: 50px;
@@ -481,73 +414,24 @@
             justify-content: center;
         }
         
-        .archetype-section .section-icon {
-            color: #f72585;
-            background-color: rgba(247, 37, 133, 0.1);
-        }
-        
-        .section-title h3 {
-            font-size: 1.4rem;
-            margin-bottom: 5px;
-            color: var(--secondary);
-        }
-        
-        .section-title p {
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-        
-        .result-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-        }
-        
-        .result-card {
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .result-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .result-icon {
-            font-size: 1.5rem;
-            color: var(--primary);
-            width: 45px;
-            height: 45px;
-            background-color: rgba(67, 97, 238, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .result-title h4 {
-            font-size: 1.2rem;
+        .result-title h3 {
+            font-size: 1.3rem;
             margin-bottom: 5px;
             color: var(--secondary);
         }
         
         .result-title p {
             color: var(--gray);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
         }
         
-        .result-card-content {
+        .result-content {
             flex-grow: 1;
         }
         
         .result-image {
-            width: 120px;
-            height: 120px;
+            width: 150px;
+            height: 150px;
             border-radius: 8px;
             overflow: hidden;
             margin: 0 auto 15px;
@@ -560,34 +444,34 @@
         }
         
         .result-card-title {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             color: var(--dark);
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             text-align: center;
         }
         
         .result-comment {
-            background-color: white;
+            background-color: #f8f9fa;
             padding: 15px;
             border-radius: 8px;
             border-left: 3px solid var(--primary-light);
         }
         
-        .result-comment h5 {
-            font-size: 0.95rem;
-            margin-bottom: 8px;
+        .result-comment h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
             color: var(--secondary);
             display: flex;
             align-items: center;
             gap: 8px;
         }
         
-        .result-comment h5 i {
+        .result-comment h4 i {
             color: var(--primary);
         }
         
         .result-comment-text {
-            font-size: 0.95rem;
+            font-size: 1rem;
             line-height: 1.5;
             color: var(--dark);
         }
@@ -627,11 +511,6 @@
         
         .share-btn.copy {
             background-color: var(--primary);
-            color: white;
-        }
-        
-        .share-btn.pdf {
-            background-color: var(--danger);
             color: white;
         }
         
@@ -692,7 +571,7 @@
                 height: 130px;
             }
             
-            .result-content {
+            .results-container {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
@@ -739,7 +618,7 @@
                 flex-direction: column;
             }
             
-            .result-content {
+            .results-container {
                 grid-template-columns: 1fr;
             }
         }
@@ -758,8 +637,8 @@
             }
             
             .result-image {
-                width: 100px;
-                height: 100px;
+                width: 120px;
+                height: 120px;
             }
         }
     </style>
@@ -772,76 +651,49 @@
                 <i class="fas fa-crown"></i>
                 <h1>Тест на стиль руководства</h1>
             </div>
-            <p class="subtitle">Определите свой архетип руководителя и выберите метафоры, которые лучше всего описывают ваш стиль руководства</p>
+            <p class="subtitle">Выберите метафоры, которые лучше всего описывают ваши сильные стороны, зоны роста и идеальный стиль руководства</p>
         </header>
         
-        <!-- ШАГ 0: ВЫБОР АРХЕТИПА -->
+        <!-- ИНСТРУКЦИЯ -->
         <section id="step0" class="step active">
             <div class="step-header">
-                <div class="step-number">0</div>
-                <h2>Выберите ваш архетип</h2>
-                <p class="step-description">Какой тип руководителя вам ближе всего?</p>
+                <div class="step-number">?</div>
+                <h2>Добро пожаловать!</h2>
+                <p class="step-description">Этот тест поможет вам определить ваши сильные стороны, точки для роста и идеальный стиль руководства</p>
             </div>
             
-            <div class="archetypes-container">
-                <div class="archetype-card" data-id="1">
-                    <div class="archetype-icon">
-                        <i class="fas fa-fire"></i>
-                    </div>
-                    <div class="archetype-title">Мотиватор</div>
-                    <div class="archetype-description">
-                        Вдохновляет команду, создаёт энтузиазм, фокусируется на развитии людей и их потенциала
-                    </div>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div style="background-color: #f8f9fa; padding: 25px; border-radius: 12px; margin-bottom: 25px;">
+                    <h3 style="color: var(--secondary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-info-circle"></i> Как это работает
+                    </h3>
+                    <ul style="list-style-type: none; padding-left: 0;">
+                        <li style="padding: 12px; border-bottom: 1px dashed #ddd; display: flex; align-items: center; gap: 15px;">
+                            <div style="background-color: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">1</div>
+                            <div>
+                                <strong>Выберите 3 карточки</strong> из 15 предложенных
+                            </div>
+                        </li>
+                        <li style="padding: 12px; border-bottom: 1px dashed #ddd; display: flex; align-items: center; gap: 15px;">
+                            <div style="background-color: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">2</div>
+                            <div>
+                                <strong>Объясните свой выбор</strong> для каждой карточки
+                            </div>
+                        </li>
+                        <li style="padding: 12px; display: flex; align-items: center; gap: 15px;">
+                            <div style="background-color: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">3</div>
+                            <div>
+                                <strong>Получите сводку</strong> своих выборов и комментариев
+                            </div>
+                        </li>
+                    </ul>
                 </div>
                 
-                <div class="archetype-card" data-id="2">
-                    <div class="archetype-icon">
-                        <i class="fas fa-chess"></i>
-                    </div>
-                    <div class="archetype-title">Стратег</div>
-                    <div class="archetype-description">
-                        Видит общую картину, планирует наперёд, анализирует риски и возможности
-                    </div>
+                <div style="text-align: center;">
+                    <button id="start-btn" class="btn btn-primary pulse" style="padding: 15px 40px; font-size: 1.2rem;">
+                        <i class="fas fa-play-circle"></i> Начать тест
+                    </button>
                 </div>
-                
-                <div class="archetype-card" data-id="3">
-                    <div class="archetype-icon">
-                        <i class="fas fa-hands-helping"></i>
-                    </div>
-                    <div class="archetype-title">Опекун</div>
-                    <div class="archetype-description">
-                        Заботится о благополучии команды, создаёт поддерживающую среду, помогает в развитии
-                    </div>
-                </div>
-                
-                <div class="archetype-card" data-id="4">
-                    <div class="archetype-icon">
-                        <i class="fas fa-clipboard-check"></i>
-                    </div>
-                    <div class="archetype-title">Инспектор</div>
-                    <div class="archetype-description">
-                        Фокусируется на деталях, процессах, качестве и соблюдении стандартов
-                    </div>
-                </div>
-            </div>
-            
-            <div id="comment-archetype" class="comment-container">
-                <h3><i class="fas fa-comment-dots"></i> Почему вы выбрали этот архетип?</h3>
-                <textarea 
-                    id="comment-input-archetype" 
-                    class="comment-input" 
-                    placeholder="Объясните, почему вы считаете себя Мотиватором, Стратегом, Опекуном или Инспектором..."
-                    rows="3"
-                ></textarea>
-                <div class="comment-help">
-                    Опишите, какие качества этого архетипа вам близки и как они проявляются в вашей работе.
-                </div>
-            </div>
-            
-            <div style="text-align: center; margin-top: 30px;">
-                <button id="next-from-archetype" class="btn btn-primary" disabled style="padding: 15px 40px; font-size: 1.2rem;">
-                    Продолжить тест <i class="fas fa-arrow-right"></i>
-                </button>
             </div>
         </section>
         
@@ -853,21 +705,18 @@
             <div class="step-header">
                 <div class="step-number"><i class="fas fa-chart-bar"></i></div>
                 <h2>Ваши результаты</h2>
-                <p class="step-description">Сводка вашего архетипа, выборов и комментариев</p>
+                <p class="step-description">Сводка ваших выборов и комментариев</p>
             </div>
             
             <div id="results-container"></div>
             
             <div class="share-results">
                 <h3 style="margin-bottom: 15px;">Поделиться результатами</h3>
-                <p style="color: var(--gray); margin-bottom: 20px;">Сохраните или отправьте результаты теста</p>
+                <p style="color: var(--gray); margin-bottom: 20px;">Скопируйте текст результатов или пройдите тест заново</p>
                 
                 <div class="share-buttons">
                     <button id="copy-results" class="share-btn copy">
                         <i class="far fa-copy"></i> Копировать текст
-                    </button>
-                    <button id="save-pdf" class="share-btn pdf">
-                        <i class="far fa-file-pdf"></i> Сохранить как PDF
                     </button>
                     <button id="restart-test" class="share-btn restart">
                         <i class="fas fa-redo"></i> Пройти еще раз
@@ -898,7 +747,7 @@
         
         <!-- ФУТЕР -->
         <footer>
-            <p>© 2023 Тест на стиль руководства. Все метафоры являются символическими и предназначены для саморефлексии.</p>
+            <p>© Лучший отдел обучения. Тест на стиль руководства. Все метафоры являются символическими и предназначены для саморефлексии.</p>
             <p style="margin-top: 10px; font-size: 0.85rem;">Разработано для развития лидерских качеств</p>
         </footer>
     </div>
@@ -906,21 +755,81 @@
     <script>
         // ===== ДАННЫЕ ТЕСТА =====
         const cardsData = [
-            { id: 1, title: "Горная вершина", image: "images/1.png" },
-            { id: 2, title: "Бурное море", image: "images/2.png" },
-            { id: 3, title: "Спокойное озеро", image: "images/3.png" },
-            { id: 4, title: "Мост через пропасть", image: "images/4.png" },
-            { id: 5, title: "Маяк", image: "images/5.png" },
-            { id: 6, title: "Крепость с стенами", image: "images/6.png" },
-            { id: 7, title: "Строящийся дом", image: "images/7.png" },
-            { id: 8, title: "Дирижер оркестра", image: "images/8.png" },
-            { id: 9, title: "Лев со своей прайдом", image: "images/9.png" },
-            { id: 10, title: "Стая птиц в полете", image: "images/10.png" },
-            { id: 11, title: "Паззл", image: "images/11.png" },
-            { id: 12, title: "Компас", image: "images/12.png" },
-            { id: 13, title: "Зажженная свеча", image: "images/13.png" },
-            { id: 14, title: "Разбитая ваза, склеенная золотом", image: "images/14.png" },
-            { id: 15, title: "Лабиринт", image: "images/15.png" }
+            {
+                id: 1,
+                title: "Горная вершина",
+                image: "images/1.png",
+            },
+            {
+                id: 2,
+                title: "Бурное море",
+                image: "images/2.png",
+            },
+            {
+                id: 3,
+                title: "Спокойное озеро",
+                image: "images/3.png",
+            },
+            {
+                id: 4,
+                title: "Мост через пропасть",
+                image: "images/4.png",
+            },
+            {
+                id: 5,
+                title: "Маяк",
+                image: "images/5.png",
+            },
+            {
+                id: 6,
+                title: "Крепость с стенами",
+                image: "images/6.png",
+            },
+            {
+                id: 7,
+                title: "Строящийся дом",
+                image: "images/7.png",
+            },
+            {
+                id: 8,
+                title: "Дирижер оркестра",
+                image: "images/8.png",
+            },
+            {
+                id: 9,
+                title: "Лев со своим прайдом",
+                image: "images/9.png",
+            },
+            {
+                id: 10,
+                title: "Стая птиц в полете",
+                image: "images/10.png",
+            },
+            {
+                id: 11,
+                title: "Паззл",
+                image: "images/11.png",
+            },
+            {
+                id: 12,
+                title: "Компас",
+                image: "images/12.png",
+            },
+            {
+                id: 13,
+                title: "Зажженная свеча",
+                image: "images/13.png",
+            },
+            {
+                id: 14,
+                title: "Разбитая ваза, склеенная золотом",
+                image: "images/14.png",
+            },
+            {
+                id: 15,
+                title: "Лабиринт",
+                image: "images/15.png",
+            }
         ];
 
         const testSteps = [
@@ -933,103 +842,24 @@
             },
             {
                 id: 2,
-                title: "Ваши точки для прокачки",
+                title: "Точка для прокачки",
                 description: "Что вам нужно развивать или улучшать?",
                 icon: "fas fa-chart-line",
                 commentPlaceholder: "Объясните, почему вы выбрали эту картинку как точку для роста..."
             },
             {
                 id: 3,
-                title: "Ваш идеальный стиль руководства",
+                title: "Идеальный стиль руководства",
                 description: "К чему вы стремитесь в своем развитии как руководитель?",
                 icon: "fas fa-bullseye",
-                commentPlaceholder: "Объясните, почему вы выбрали эту картинку как идеальный стиль и какие шаги должны к нему привести..."
-            }
-        ];
-
-        const archetypesData = [
-            {
-                id: 1,
-                title: "Мотиватор",
-                icon: "fas fa-fire",
-                color: "#f72585",
-                description: "Вдохновляет команду, создаёт энтузиазм, фокусируется на развитии людей и их потенциала"
-            },
-            {
-                id: 2,
-                title: "Стратег",
-                icon: "fas fa-chess",
-                color: "#4361ee",
-                description: "Видит общую картину, планирует наперёд, анализирует риски и возможности"
-            },
-            {
-                id: 3,
-                title: "Опекун",
-                icon: "fas fa-hands-helping",
-                color: "#4cc9f0",
-                description: "Заботится о благополучии команды, создаёт поддерживающую среду, помогает в развитии"
-            },
-            {
-                id: 4,
-                title: "Инспектор",
-                icon: "fas fa-clipboard-check",
-                color: "#f8961e",
-                description: "Фокусируется на деталях, процессах, качестве и соблюдении стандартов"
+                commentPlaceholder: "Объясните, почему вы выбрали эту картинку как идеальный стиль..."
             }
         ];
 
         // ===== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ =====
         let currentStep = 0;
-        let selectedCards = [];
-        let usedCardIds = new Set();
-        let selectedArchetype = null;
-        let archetypeComment = "";
-
-        // ===== ИНИЦИАЛИЗАЦИЯ АРХЕТИПОВ =====
-        function initArchetypeSelection() {
-            const archetypeCards = document.querySelectorAll('.archetype-card');
-            const commentContainer = document.getElementById('comment-archetype');
-            const commentInput = document.getElementById('comment-input-archetype');
-            const nextButton = document.getElementById('next-from-archetype');
-            
-            archetypeCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    // Снимаем выделение с других карточек
-                    archetypeCards.forEach(c => c.classList.remove('selected'));
-                    
-                    // Выделяем текущую карточку
-                    this.classList.add('selected');
-                    
-                    // Сохраняем выбранный архетип
-                    const archetypeId = parseInt(this.dataset.id);
-                    selectedArchetype = archetypesData.find(a => a.id === archetypeId);
-                    
-                    // Показываем поле для комментария
-                    commentContainer.classList.add('active');
-                    
-                    // Активируем кнопку "Продолжить тест"
-                    nextButton.disabled = false;
-                    
-                    // Устанавливаем фокус на поле ввода комментария
-                    setTimeout(() => {
-                        commentInput.focus();
-                    }, 100);
-                });
-            });
-            
-            // Сохраняем комментарий к архетипу
-            commentInput.addEventListener('input', function() {
-                archetypeComment = this.value;
-            });
-            
-            // Кнопка "Продолжить тест"
-            nextButton.addEventListener('click', function() {
-                if (selectedArchetype) {
-                    document.getElementById('step0').classList.remove('active');
-                    initTest();
-                }
-            });
-        }
+        let selectedCards = []; // Массив выбранных карточек {stepId, cardId, cardData, comment}
+        let usedCardIds = new Set(); // Множество ID использованных карточек
 
         // ===== ИНИЦИАЛИЗАЦИЯ ТЕСТА =====
         function initTest() {
@@ -1090,17 +920,14 @@
             });
             
             // Показываем текущий шаг
-            const stepElement = document.getElementById(`step${stepId}`);
-            if (stepElement) {
-                stepElement.classList.add('active');
-            }
+            document.getElementById(`step${stepId}`).classList.add('active');
             currentStep = stepId;
             
             // Обновляем карточки для текущего шага
-            if (stepId >= 1 && stepId <= 3) {
-                renderCardsForStep(stepId);
-                updateCommentForStep(stepId);
-            }
+            renderCardsForStep(stepId);
+            
+            // Обновляем комментарий для текущего шага
+            updateCommentForStep(stepId);
             
             // Обновляем кнопки навигации
             updateNavigationButtons();
@@ -1292,98 +1119,43 @@
             const resultsContainer = document.getElementById('results-container');
             resultsContainer.innerHTML = '';
             
-            // 1. Секция с архетипом
-            const archetypeSection = document.createElement('div');
-            archetypeSection.className = 'results-section archetype-section';
-            archetypeSection.innerHTML = `
-                <div class="section-header">
-                    <div class="section-icon">
-                        <i class="${selectedArchetype.icon}"></i>
-                    </div>
-                    <div class="section-title">
-                        <h3>Ваш архетип руководителя</h3>
-                        <p>Тип руководителя, который вам ближе всего</p>
-                    </div>
-                </div>
-                <div class="result-content">
-                    <div class="result-card">
-                        <div class="result-header">
-                            <div class="result-icon" style="background-color: rgba(${parseInt(selectedArchetype.color.slice(1,3), 16)}, ${parseInt(selectedArchetype.color.slice(3,5), 16)}, ${parseInt(selectedArchetype.color.slice(5,7), 16)}, 0.1);">
-                                <i class="${selectedArchetype.icon}" style="color: ${selectedArchetype.color};"></i>
-                            </div>
-                            <div class="result-title">
-                                <h4>${selectedArchetype.title}</h4>
-                                <p>${selectedArchetype.description}</p>
-                            </div>
-                        </div>
-                        <div class="result-card-content">
-                            <div class="result-comment">
-                                <h5><i class="fas fa-comment"></i> Ваш комментарий:</h5>
-                                <div class="result-comment-text ${!archetypeComment ? 'empty' : ''}">
-                                    ${archetypeComment || 'Комментарий не был добавлен'}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            resultsContainer.appendChild(archetypeSection);
-            
-            // 2. Секция с ответами на вопросы
-            const questionsSection = document.createElement('div');
-            questionsSection.className = 'results-section questions-section';
-            
-            let questionsHTML = `
-                <div class="section-header">
-                    <div class="section-icon">
-                        <i class="fas fa-list-check"></i>
-                    </div>
-                    <div class="section-title">
-                        <h3>Ваши ответы на вопросы</h3>
-                        <p>Выбранные карточки и комментарии</p>
-                    </div>
-                </div>
-                <div class="result-content">
-            `;
-            
             // Сортируем выборы по stepId
             const sortedSelections = selectedCards.sort((a, b) => a.stepId - b.stepId);
             
             sortedSelections.forEach(selection => {
                 const stepInfo = testSteps.find(step => step.id === selection.stepId);
                 
-                questionsHTML += `
-                    <div class="result-card">
-                        <div class="result-header">
-                            <div class="result-icon">
-                                <i class="${stepInfo.icon}"></i>
-                            </div>
-                            <div class="result-title">
-                                <h4>${stepInfo.title}</h4>
-                                <p>${stepInfo.description}</p>
-                            </div>
+                const resultCard = document.createElement('div');
+                resultCard.className = 'result-card';
+                
+                resultCard.innerHTML = `
+                    <div class="result-header">
+                        <div class="result-icon">
+                            <i class="${stepInfo.icon}"></i>
                         </div>
+                        <div class="result-title">
+                            <h3>${stepInfo.title}</h3>
+                            <p>${stepInfo.description}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="result-content">
+                        <div class="result-image">
+                            <img src="${selection.cardData.image}" alt="${selection.cardData.title}" />
+                        </div>
+                        <div class="result-card-title">${selection.cardData.title}</div>
                         
-                        <div class="result-card-content">
-                            <div class="result-image">
-                                <img src="${selection.cardData.image}" alt="${selection.cardData.title}" />
-                            </div>
-                            <div class="result-card-title">${selection.cardData.title}</div>
-                            
-                            <div class="result-comment">
-                                <h5><i class="fas fa-comment"></i> Ваш комментарий:</h5>
-                                <div class="result-comment-text ${!selection.comment ? 'empty' : ''}">
-                                    ${selection.comment || 'Комментарий не был добавлен'}
-                                </div>
+                        <div class="result-comment">
+                            <h4><i class="fas fa-comment"></i> Ваш комментарий:</h4>
+                            <div class="result-comment-text ${!selection.comment ? 'empty' : ''}">
+                                ${selection.comment || 'Комментарий не был добавлен'}
                             </div>
                         </div>
                     </div>
                 `;
+                
+                resultsContainer.appendChild(resultCard);
             });
-            
-            questionsHTML += `</div>`;
-            questionsSection.innerHTML = questionsHTML;
-            resultsContainer.appendChild(questionsSection);
             
             // Прокручиваем к началу результатов
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1392,15 +1164,6 @@
         // ===== КОПИРОВАНИЕ РЕЗУЛЬТАТОВ =====
         function copyResultsToClipboard() {
             let resultsText = "Мои результаты теста на стиль руководства:\n\n";
-            
-            // Архетип
-            resultsText += "=== МОЙ АРХЕТИП РУКОВОДИТЕЛЯ ===\n";
-            resultsText += `Архетип: ${selectedArchetype.title}\n`;
-            resultsText += `Описание: ${selectedArchetype.description}\n`;
-            resultsText += `Комментарий: ${archetypeComment || 'Комментарий не был добавлен'}\n\n`;
-            
-            // Вопросы
-            resultsText += "=== ОТВЕТЫ НА ВОПРОСЫ ===\n";
             
             // Сортируем выборы по stepId
             const sortedSelections = selectedCards.sort((a, b) => a.stepId - b.stepId);
@@ -1418,28 +1181,12 @@
             });
         }
 
-        // ===== СОХРАНЕНИЕ КАК PDF =====
-        function saveAsPDF() {
-            alert('В реальном приложении здесь была бы генерация PDF. Для демо просто копируем результаты.');
-            copyResultsToClipboard();
-        }
-
         // ===== ПЕРЕЗАПУСК ТЕСТА =====
         function restartTest() {
             // Сброс переменных
             currentStep = 0;
             selectedCards = [];
             usedCardIds.clear();
-            selectedArchetype = null;
-            archetypeComment = "";
-            
-            // Сбрасываем выбор архетипа в UI
-            document.querySelectorAll('.archetype-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-            document.getElementById('comment-archetype').classList.remove('active');
-            document.getElementById('comment-input-archetype').value = '';
-            document.getElementById('next-from-archetype').disabled = true;
             
             // Возвращаем к началу
             document.getElementById('results-step').classList.remove('active');
@@ -1452,17 +1199,20 @@
 
         // ===== ОБРАБОТЧИКИ СОБЫТИЙ =====
         document.addEventListener('DOMContentLoaded', () => {
-            // Инициализация выбора архетипа
-            initArchetypeSelection();
+            // Кнопка "Начать тест"
+            document.getElementById('start-btn').addEventListener('click', () => {
+                document.getElementById('step0').classList.remove('active');
+                initTest();
+            });
             
-            // Кнопка "Назад" в основной навигации
+            // Кнопка "Назад"
             document.getElementById('prev-btn').addEventListener('click', () => {
                 if (currentStep > 1) {
                     loadStep(currentStep - 1);
                 }
             });
             
-            // Кнопка "Далее" в основной навигации
+            // Кнопка "Далее"
             document.getElementById('next-btn').addEventListener('click', () => {
                 if (currentStep < testSteps.length) {
                     loadStep(currentStep + 1);
@@ -1473,9 +1223,6 @@
             
             // Кнопка "Копировать результаты"
             document.getElementById('copy-results').addEventListener('click', copyResultsToClipboard);
-            
-            // Кнопка "Сохранить как PDF"
-            document.getElementById('save-pdf').addEventListener('click', saveAsPDF);
             
             // Кнопка "Пройти еще раз"
             document.getElementById('restart-test').addEventListener('click', restartTest);
