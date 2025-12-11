@@ -380,7 +380,7 @@
         /* ===== РЕЗУЛЬТАТЫ ===== */
         .results-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 25px;
             margin-top: 30px;
         }
@@ -415,14 +415,14 @@
         }
         
         .result-title h3 {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             margin-bottom: 5px;
             color: var(--secondary);
         }
         
         .result-title p {
             color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         
         .result-content {
@@ -430,8 +430,8 @@
         }
         
         .result-image {
-            width: 150px;
-            height: 150px;
+            width: 120px;
+            height: 120px;
             border-radius: 8px;
             overflow: hidden;
             margin: 0 auto 15px;
@@ -444,7 +444,7 @@
         }
         
         .result-card-title {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: var(--dark);
             margin-bottom: 15px;
             text-align: center;
@@ -458,7 +458,7 @@
         }
         
         .result-comment h4 {
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin-bottom: 10px;
             color: var(--secondary);
             display: flex;
@@ -471,7 +471,7 @@
         }
         
         .result-comment-text {
-            font-size: 1rem;
+            font-size: 0.95rem;
             line-height: 1.5;
             color: var(--dark);
         }
@@ -511,6 +511,11 @@
         
         .share-btn.copy {
             background-color: var(--primary);
+            color: white;
+        }
+        
+        .share-btn.pdf {
+            background-color: var(--danger);
             color: white;
         }
         
@@ -637,8 +642,8 @@
             }
             
             .result-image {
-                width: 120px;
-                height: 120px;
+                width: 100px;
+                height: 100px;
             }
         }
     </style>
@@ -651,7 +656,7 @@
                 <i class="fas fa-crown"></i>
                 <h1>Тест на стиль руководства</h1>
             </div>
-            <p class="subtitle">Выберите метафоры, которые лучше всего описывают ваши сильные стороны, зоны роста и идеальный стиль руководства</p>
+            <p class="subtitle">Выберите метафоры, которые лучше всего описывают вас как руководителя, вашу команду и ваши сильные стороны. Объясните, почему вы выбрали каждую карточку.</p>
         </header>
         
         <!-- ИНСТРУКЦИЯ -->
@@ -659,7 +664,7 @@
             <div class="step-header">
                 <div class="step-number">?</div>
                 <h2>Добро пожаловать!</h2>
-                <p class="step-description">Этот тест поможет вам определить ваши сильные стороны, точки для роста и идеальный стиль руководства</p>
+                <p class="step-description">Этот тест поможет вам лучше понять свой стиль руководства через метафоры</p>
             </div>
             
             <div style="max-width: 800px; margin: 0 auto;">
@@ -671,7 +676,7 @@
                         <li style="padding: 12px; border-bottom: 1px dashed #ddd; display: flex; align-items: center; gap: 15px;">
                             <div style="background-color: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">1</div>
                             <div>
-                                <strong>Выберите 3 карточки</strong> из 15 предложенных
+                                <strong>Выберите 5 карточек</strong> из 15 предложенных
                             </div>
                         </li>
                         <li style="padding: 12px; border-bottom: 1px dashed #ddd; display: flex; align-items: center; gap: 15px;">
@@ -697,7 +702,7 @@
             </div>
         </section>
         
-        <!-- ШАГИ ТЕСТА 1-3 (будут сгенерированы JavaScript) -->
+        <!-- ШАГИ ТЕСТА 1-5 (будут сгенерированы JavaScript) -->
         <div id="test-steps"></div>
         
         <!-- РЕЗУЛЬТАТЫ -->
@@ -712,11 +717,14 @@
             
             <div class="share-results">
                 <h3 style="margin-bottom: 15px;">Поделиться результатами</h3>
-                <p style="color: var(--gray); margin-bottom: 20px;">Скопируйте текст результатов или пройдите тест заново</p>
+                <p style="color: var(--gray); margin-bottom: 20px;">Сохраните или отправьте результаты теста</p>
                 
                 <div class="share-buttons">
                     <button id="copy-results" class="share-btn copy">
                         <i class="far fa-copy"></i> Копировать текст
+                    </button>
+                    <button id="save-pdf" class="share-btn pdf">
+                        <i class="far fa-file-pdf"></i> Сохранить как PDF
                     </button>
                     <button id="restart-test" class="share-btn restart">
                         <i class="fas fa-redo"></i> Пройти еще раз
@@ -736,7 +744,7 @@
                     <div class="progress-bar">
                         <div id="progress-fill" class="progress-fill"></div>
                     </div>
-                    <div id="progress-text" class="progress-text">Вопрос 1 из 3</div>
+                    <div id="progress-text" class="progress-text">Шаг 1 из 5</div>
                 </div>
                 
                 <button id="next-btn" class="btn btn-primary" disabled>
@@ -754,6 +762,8 @@
 
     <script>
         // ===== ДАННЫЕ ТЕСТА =====
+        // Картинки должны называться: 1.png, 2.png, ..., 15.png
+        // и находиться в папке images/ рядом с HTML файлом
         const cardsData = [
             {
                 id: 1,
@@ -835,24 +845,33 @@
         const testSteps = [
             {
                 id: 1,
-                title: "Ваша суперсила",
-                description: "Какое качество помогает вам больше всего в руководстве?",
-                icon: "fas fa-bolt",
-                commentPlaceholder: "Объясните, почему вы выбрали эту картинку как свою суперсилу..."
+                title: "Я как руководитель",
+                description: "Как я себя ощущаю в роли сейчас",
+                icon: "fas fa-user-tie"
             },
             {
                 id: 2,
-                title: "Точка для прокачки",
-                description: "Что вам нужно развивать или улучшать?",
-                icon: "fas fa-chart-line",
-                commentPlaceholder: "Объясните, почему вы выбрали эту картинку как точку для роста..."
+                title: "Моя команда",
+                description: "Как я вижу свою группу операторов",
+                icon: "fas fa-users"
             },
             {
                 id: 3,
-                title: "Идеальный стиль руководства",
-                description: "К чему вы стремитесь в своем развитии как руководитель?",
-                icon: "fas fa-bullseye",
-                commentPlaceholder: "Объясните, почему вы выбрали эту картинку как идеальный стиль..."
+                title: "Моя Суперсила",
+                description: "Качество, которое помогает больше всего",
+                icon: "fas fa-bolt"
+            },
+            {
+                id: 4,
+                title: "Мое Слепое пятно",
+                description: "То, что я не всегда замечаю, но что мешает",
+                icon: "fas fa-eye-slash"
+            },
+            {
+                id: 5,
+                title: "Мой идеальный стиль руководства",
+                description: "К чему я стремлюсь",
+                icon: "fas fa-bullseye"
             }
         ];
 
@@ -884,11 +903,11 @@
                         <textarea 
                             id="comment-input-step-${step.id}" 
                             class="comment-input" 
-                            placeholder="${step.commentPlaceholder}"
+                            placeholder="Объясните ваш выбор... Например: 'Я выбрал эту картинку, потому что...'"
                             rows="3"
                         ></textarea>
                         <div class="comment-help">
-                            Постарайтесь подробно описать ваши мысли и ассоциации.
+                            Постарайтесь описать, почему именно эта метафора лучше всего описывает ваш опыт или восприятие.
                         </div>
                     </div>
                 `;
@@ -963,7 +982,7 @@
                     cardElement.classList.add('selected');
                 }
                 
-                // Создаем HTML для карточки
+                // Создаем HTML для карточки - ТОЛЬКО ИЗОБРАЖЕНИЕ И НАЗВАНИЕ
                 cardElement.innerHTML = `
                     <div class="card-image">
                         <img src="${card.image}" alt="${card.title}" />
@@ -1012,7 +1031,7 @@
                 stepId, 
                 cardId, 
                 cardData, 
-                comment: oldComment
+                comment: oldComment // Сохраняем старый комментарий, если был
             });
             usedCardIds.add(cardId);
             
@@ -1101,7 +1120,7 @@
             
             // Подсчитываем количество завершенных шагов
             const completedSteps = selectedCards.filter(item => item.stepId <= currentStep).length;
-            progressText.textContent = `Вопрос ${currentStep} из ${testSteps.length} (выбрано: ${completedSteps})`;
+            progressText.textContent = `Шаг ${currentStep} из ${testSteps.length} (выбрано: ${completedSteps})`;
         }
 
         // ===== ПОКАЗ РЕЗУЛЬТАТОВ =====
@@ -1181,6 +1200,12 @@
             });
         }
 
+        // ===== СОХРАНЕНИЕ КАК PDF =====
+        function saveAsPDF() {
+            alert('В реальном приложении здесь была бы генерация PDF. Для демо просто копируем результаты.');
+            copyResultsToClipboard();
+        }
+
         // ===== ПЕРЕЗАПУСК ТЕСТА =====
         function restartTest() {
             // Сброс переменных
@@ -1223,6 +1248,9 @@
             
             // Кнопка "Копировать результаты"
             document.getElementById('copy-results').addEventListener('click', copyResultsToClipboard);
+            
+            // Кнопка "Сохранить как PDF"
+            document.getElementById('save-pdf').addEventListener('click', saveAsPDF);
             
             // Кнопка "Пройти еще раз"
             document.getElementById('restart-test').addEventListener('click', restartTest);
