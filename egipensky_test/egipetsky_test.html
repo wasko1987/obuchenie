@@ -115,6 +115,14 @@
             display: block;
             animation: fadeIn 0.8s ease;
         }
+        .real-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -692,12 +700,10 @@
                     // Для реальных изображений замените этот блок на:
                     // `<img src="images/${image.png}" alt="${image.name}" class="real-image">`
                     div.innerHTML = `
-                        <div class="image-container">
-                            <div class="image-placeholder">
-                                <i class="fas ${image.icon}"></i>
+                         <div class="image-container">
+                         <img src="images/${image.png}" alt="${image.name}" class="real-image">
                             </div>
-                        </div>
-                        <div class="image-label">${image.name}</div>
+                         <div class="image-label">${image.name}</div>
                     `;
                     
                     div.addEventListener('click', function() {
