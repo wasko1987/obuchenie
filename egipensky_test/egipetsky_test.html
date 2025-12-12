@@ -1,1 +1,896 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Древнеегипетский тест: Ваша энергия и потенциал</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
+        :root {
+            --sand-light: #f5e9d4;
+            --sand: #e1c38e;
+            --sand-dark: #c9a96e;
+            --terracotta: #a35c4a;
+            --terracotta-dark: #7a3f31;
+            --sky-blue: #87ceeb;
+            --sky-blue-dark: #5d9ec9;
+            --papyrus: #f8f3e5;
+            --hieroglyph: #2c1810;
+            --gold: #daa520;
+        }
+
+        body {
+            background-color: var(--sand-light);
+            color: var(--hieroglyph);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f5e9d4"/><path d="M20,20 L30,15 L40,25 L35,35 L25,30 Z" fill="%23c9a96e" opacity="0.1"/><circle cx="70" cy="30" r="8" fill="%23a35c4a" opacity="0.1"/><path d="M15,70 Q25,60 35,70 T55,65" stroke="%237a3f31" stroke-width="2" fill="none" opacity="0.1"/></svg>');
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: var(--papyrus);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 8px solid var(--terracotta);
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(to right, var(--terracotta), var(--terracotta-dark));
+            color: var(--sand-light);
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header::before, .header::after {
+            content: "𓀀𓀁𓀂𓀃𓀄𓀅𓀆𓀇𓀈𓀉";
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.3;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .header::before {
+            left: 20px;
+        }
+
+        .header::after {
+            right: 20px;
+        }
+
+        .progress-container {
+            background-color: var(--sand);
+            height: 10px;
+            position: relative;
+        }
+
+        .progress-bar {
+            background-color: var(--gold);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            position: absolute;
+            right: 20px;
+            top: -25px;
+            font-weight: bold;
+            color: var(--terracotta-dark);
+        }
+
+        .block {
+            display: none;
+            padding: 30px;
+        }
+
+        .block.active {
+            display: block;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .block-title {
+            color: var(--terracotta-dark);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--sand-dark);
+            padding-bottom: 15px;
+            position: relative;
+        }
+
+        .block-title::after {
+            content: "𓂀";
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+        }
+
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        /* Для мониторов: 2 ряда по 5 картинок */
+        @media (min-width: 992px) {
+            .images-grid {
+                grid-template-columns: repeat(5, 1fr);
+                max-width: 1200px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .image-option {
+                max-width: 220px;
+                justify-self: center;
+            }
+        }
+
+        .image-option {
+            border: 3px solid transparent;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+        }
+
+        .image-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .image-option.selected {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.3);
+        }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+            padding-top: 100%; /* Это создает квадратный контейнер (соотношение 1:1) */
+            overflow: hidden;
+        }
+
+        .image-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--sand), var(--sky-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--terracotta-dark);
+            font-size: 2.8rem;
+        }
+
+        /* Увеличение иконок для мониторов */
+        @media (min-width: 992px) {
+            .image-placeholder {
+                font-size: 3.5rem;
+            }
+        }
+
+        .image-label {
+            padding: 15px 10px;
+            text-align: center;
+            background-color: var(--sand-light);
+            font-weight: 600;
+            color: var(--hieroglyph);
+            border-top: 1px solid var(--sand-dark);
+            flex-grow: 0;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Увеличение размера текста для мониторов */
+        @media (min-width: 992px) {
+            .image-label {
+                font-size: 1rem;
+                padding: 15px 8px;
+                min-height: 70px;
+            }
+        }
+
+        .explanation {
+            margin-top: 40px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .explanation label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--terracotta-dark);
+            font-size: 1.2rem;
+        }
+
+        .explanation textarea {
+            width: 100%;
+            height: 120px;
+            padding: 15px;
+            border: 2px solid var(--sand-dark);
+            border-radius: 8px;
+            background-color: var(--sand-light);
+            color: var(--hieroglyph);
+            font-size: 1rem;
+            resize: vertical;
+        }
+
+        .explanation textarea:focus {
+            outline: none;
+            border-color: var(--terracotta);
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-prev {
+            background-color: var(--sand);
+            color: var(--terracotta-dark);
+        }
+
+        .btn-prev:hover {
+            background-color: var(--sand-dark);
+        }
+
+        .btn-next {
+            background-color: var(--terracotta);
+            color: var(--sand-light);
+        }
+
+        .btn-next:hover {
+            background-color: var(--terracotta-dark);
+        }
+
+        .btn-submit {
+            background-color: var(--gold);
+            color: var(--hieroglyph);
+        }
+
+        .btn-submit:hover {
+            background-color: #c69500;
+        }
+
+        .btn-copy {
+            background-color: var(--sky-blue);
+            color: var(--hieroglyph);
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .btn-copy:hover {
+            background-color: var(--sky-blue-dark);
+        }
+
+        .results {
+            padding: 30px;
+            text-align: center;
+            display: none;
+        }
+
+        .results h2 {
+            color: var(--terracotta-dark);
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            border-bottom: 3px solid var(--gold);
+            padding-bottom: 15px;
+            display: inline-block;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .result-item {
+            background-color: var(--sand-light);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid var(--terracotta);
+        }
+
+        .result-title {
+            color: var(--terracotta-dark);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .result-title i {
+            margin-right: 10px;
+            color: var(--gold);
+        }
+
+        .result-image-container {
+            position: relative;
+            width: 100%;
+            padding-top: 100%; /* Квадратный контейнер для результатов */
+            margin-bottom: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .result-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--sand), var(--sky-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--terracotta-dark);
+            font-size: 3rem;
+        }
+
+        .result-explanation {
+            background-color: var(--papyrus);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--sand-dark);
+            font-style: italic;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            color: var(--terracotta);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--sand-dark);
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--gold);
+            color: var(--hieroglyph);
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .images-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .block-title {
+                font-size: 1.5rem;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .image-label {
+                font-size: 0.9rem;
+                min-height: 50px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .images-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 15px;
+            }
+            
+            .image-label {
+                font-size: 0.85rem;
+                padding: 10px 5px;
+                min-height: 45px;
+            }
+            
+            .block-title::after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>𓂀 Древнеегипетский тест 𓂀</h1>
+            <p>Откройте тайны своей энергии, роли в команде, суперсилы и зон роста</p>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+            <div class="progress-text" id="progressText">0/4</div>
+        </div>
+        
+        <!-- Блок 1: Энергетическое состояние -->
+        <div class="block active" id="block1">
+            <h2 class="block-title">Блок 1: Текущее энергетическое состояние</h2>
+            <p class="block-description" style="text-align: center; margin-bottom: 25px; font-size: 1.2rem; color: var(--terracotta);">
+                «Какое изображение лучше всего описывает ваш запас энергии в последнее время?»
+            </p>
+            
+            <div class="images-grid" id="images1">
+                <!-- Изображения будут добавлены через JavaScript -->
+            </div>
+            
+            <div class="explanation">
+                <label for="explanation1">Почему вы выбрали эту картинку?</label>
+                <textarea id="explanation1" placeholder="Опишите ваши ощущения и ассоциации..."></textarea>
+            </div>
+            
+            <div class="buttons">
+                <button class="btn btn-next" id="next1">Далее →</button>
+            </div>
+        </div>
+        
+        <!-- Блок 2: Позиция в команде -->
+        <div class="block" id="block2">
+            <h2 class="block-title">Блок 2: Позиция в команде</h2>
+            <p class="block-description" style="text-align: center; margin-bottom: 25px; font-size: 1.2rem; color: var(--terracotta);">
+                «Как вы видите свое место в отделе/команде?»
+            </p>
+            
+            <div class="images-grid" id="images2">
+                <!-- Изображения будут добавлены через JavaScript -->
+            </div>
+            
+            <div class="explanation">
+                <label for="explanation2">Почему вы выбрали эту картинку?</label>
+                <textarea id="explanation2" placeholder="Опишите вашу роль и ощущения в команде..."></textarea>
+            </div>
+            
+            <div class="buttons">
+                <button class="btn btn-prev" id="prev2">← Назад</button>
+                <button class="btn btn-next" id="next2">Далее →</button>
+            </div>
+        </div>
+        
+        <!-- Блок 3: Главная суперсила -->
+        <div class="block" id="block3">
+            <h2 class="block-title">Блок 3: Ваша главная суперсила</h2>
+            <p class="block-description" style="text-align: center; margin-bottom: 25px; font-size: 1.2rem; color: var(--terracotta);">
+                «Какая ваша суперсила наиболее активна?»
+            </p>
+            
+            <div class="images-grid" id="images3">
+                <!-- Изображения будут добавлены через JavaScript -->
+            </div>
+            
+            <div class="explanation">
+                <label for="explanation3">Почему вы выбрали эту картинку?</label>
+                <textarea id="explanation3" placeholder="Опишите, как проявляется ваша суперсила..."></textarea>
+            </div>
+            
+            <div class="buttons">
+                <button class="btn btn-prev" id="prev3">← Назад</button>
+                <button class="btn btn-next" id="next3">Далее →</button>
+            </div>
+        </div>
+        
+        <!-- Блок 4: Слепое пятно и зона роста -->
+        <div class="block" id="block4">
+            <h2 class="block-title">Блок 4: Слепое пятно и зона роста</h2>
+            <p class="block-description" style="text-align: center; margin-bottom: 25px; font-size: 1.2rem; color: var(--terracotta);">
+                «Что может незаметно для вас тормозить ваш рост?»
+            </p>
+            
+            <div class="images-grid" id="images4">
+                <!-- Изображения будут добавлены через JavaScript -->
+            </div>
+            
+            <div class="explanation">
+                <label for="explanation4">Почему вы выбрали эту картинку?</label>
+                <textarea id="explanation4" placeholder="Опишите, что может замедлять ваше развитие..."></textarea>
+            </div>
+            
+            <div class="buttons">
+                <button class="btn btn-prev" id="prev4">← Назад</button>
+                <button class="btn btn-submit" id="submit">Получить результаты</button>
+            </div>
+        </div>
+        
+        <!-- Страница результатов -->
+        <div class="results" id="results">
+            <h2>𓂀 Ваши результаты 𓂀</h2>
+            
+            <div class="results-grid" id="resultsGrid">
+                <!-- Результаты будут добавлены через JavaScript -->
+            </div>
+            
+            <button class="btn btn-copy" id="copyBtn">
+                <i class="fas fa-copy"></i> Копировать текст результатов
+            </button>
+            
+            <div class="footer">
+                <p>Древнеегипетский тест самопознания • Используйте эти инсайты для своего развития</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">
+        Текст результатов скопирован в буфер обмена!
+    </div>
+
+    <script>
+        // Данные для теста с указанием названий PNG-файлов
+        const testData = {
+            block1: {
+                title: "Текущее энергетическое состояние",
+                description: "«Какое изображение лучше всего описывает ваш запас энергии в последнее время?»",
+                images: [
+                    {id: "aktivni_vulkan", name: "Активный вулкан", icon: "fa-volcano", png: "aktivni_vulkan.png"},
+                    {id: "pole_s_podsolnuhami", name: "Солнечное поле с подсолнухами", icon: "fa-sun-plant-wilt", png: "pole_s_podsolnuhami.png"},
+                    {id: "gustoy_tuman", name: "Густой утренний туман", icon: "fa-cloud-fog", png: "gustoy_tuman.png"},
+                    {id: "nadvigaushayasa_groza", name: "Надвигающаяся гроза", icon: "fa-cloud-bolt", png: "nadvigaushayasa_groza.png"},
+                    {id: "shtil_pered_burey", name: "Штиль перед бурей", icon: "fa-wind", png: "shtil_pered_burey.png"},
+                    {id: "koster_yarko_gorashiy", name: "Костер, ярко горящий", icon: "fa-fire", png: "koster_yarko_gorashiy.png"},
+                    {id: "gorny_ruchey", name: "Горный ручей", icon: "fa-water", png: "gorny_ruchey.png"},
+                    {id: "valun_na_sklone", name: "Валун на склоне", icon: "fa-mountain", png: "valun_na_sklone.png"},
+                    {id: "raduga_posle_dojdya", name: "Радуга после дождя", icon: "fa-rainbow", png: "raduga_posle_dojdya.png"},
+                    {id: "vodovorot", name: "Водоворот", icon: "fa-circle-notch", png: "vodovorot.png"}
+                ]
+            },
+            block2: {
+                title: "Позиция в команде",
+                description: "«Как вы видите свое место в отделе/команде?»",
+                images: [
+                    {id: "kompas_v_centre_karty", name: "Компас в центре карты", icon: "fa-compass", png: "kompas_v_centre_karty.png"},
+                    {id: "most_mejdu_dvuh_beregov", name: "Мост между двух берегов", icon: "fa-bridge", png: "most_mejdu_dvuh_beregov.png"},
+                    {id: "krepkiy_fundament", name: "Крепкий фундамент", icon: "fa-cube", png: "krepkiy_fundament.png"},
+                    {id: "glaz_uragana", name: "Глаз урагана", icon: "fa-eye", png: "glaz_uragana.png"},
+                    {id: "strela_v_cel", name: "Стрела, летящая в цель", icon: "fa-bullseye", png: "strela_v_cel.png"},
+                    {id: "pazzl", name: "Недостающий пазл", icon: "fa-puzzle-piece", png: "pazzl.png"},
+                    {id: "shesterenka_v_mehanizme", name: "Шестеренка в механизме", icon: "fa-gear", png: "shesterenka_v_mehanizme.png"},
+                    {id: "mayak_na_beregu", name: "Маяк на берегу", icon: "fa-tower-observation", png: "mayak_na_beregu.png"},
+                    {id: "set_s_uzlami", name: "Сеть с узлами", icon: "fa-network-wired", png: "set_s_uzlami.png"},
+                    {id: "cirkovoy_zhongler", name: "Цирковой жонглер", icon: "fa-person-juggling", png: "cirkovoy_zhongler.png"}
+                ]
+            },
+            block3: {
+                title: "Ваша главная суперсила",
+                description: "«Какая ваша суперсила наиболее активна?»",
+                images: [
+                    {id: "uvelichitelnoe_steklo", name: "Увеличительное стекло с деталями", icon: "fa-magnifying-glass", png: "uvelichitelnoe_steklo.png"},
+                    {id: "golovolomka", name: "Головоломка, которая сходится", icon: "fa-brain", png: "golovolomka.png"},
+                    {id: "rostok", name: "Росток, пробивающийся через асфальт", icon: "fa-seedling", png: "rostok.png"},
+                    {id: "maski", name: "Набор масок на вешалке", icon: "fa-masks-theater", png: "maski.png"},
+                    {id: "molnia_v_butylke", name: "Молния в бутылке", icon: "fa-bolt", png: "molnia_v_butylke.png"},
+                    {id: "biblioteka", name: "Библиотека с закладками", icon: "fa-book-open-reader", png: "biblioteka.png"},
+                    {id: "shield", name: "Щит, защищающий других", icon: "fa-shield-halved", png: "shield.png"},
+                    {id: "stul", name: "Режиссерский стул", icon: "fa-chair", png: "stul.png"},
+                    {id: "dialogi", name: "Диалоговое окно с многими сообщениями", icon: "fa-comments", png: "dialogi.png"},
+                    {id: "himia", name: "Химическая колба с реакцией", icon: "fa-flask", png: "himia.png"}
+                ]
+            },
+            block4: {
+                title: "Слепое пятно и зона роста",
+                description: "«Что может незаметно для вас тормозить ваш рост?»",
+                images: [
+                    {id: "stena_s_zerkalom", name: "Стена с зеркальной плиткой", icon: "fa-mirror", png: "stena_s_zerkalom.png"},
+                    {id: "chernaya_dura", name: "Черная дыра искривляет пространство", icon: "fa-circle", png: "chernaya_dura.png"},
+                    {id: "karusel", name: "Карусель, крутящаяся по кругу", icon: "fa-horse", png: "karusel.png"},
+                    {id: "ten_szadi", name: "Тень, которая всегда сзади", icon: "fa-ghost", png: "ten_szadi.png"},
+                    {id: "podvodnoe_techenie", name: "Подводное течение, невидимое с поверхности", icon: "fa-water", png: "podvodnoe_techenie.png"},
+                    {id: "kloun_pechal", name: "Клоун, скрывающий печаль", icon: "fa-face-grin-tears", png: "kloun_pechal.png"},
+                    {id: "vysokaya_bashnya", name: "Высокая башня из слоновой кости", icon: "fa-chess-rook", png: "vysokaya_bashnya.png"},
+                    {id: "uvelichitelnoe_steklo_no_sebe", name: "Увеличительное стекло на себе", icon: "fa-magnifying-glass", png: "uvelichitelnoe_steklo_no_sebe.png"},
+                    {id: "pylesos", name: "Пылесос, все засасывающий", icon: "fa-wind", png: "pylesos.png"},
+                    {id: "pesochnye_chasy", name: "Песочные часы с застрявшим песком", icon: "fa-hourglass-half", png: "pesochnye_chasy.png"}
+                ]
+            }
+        };
+
+        // Состояние теста
+        const state = {
+            currentBlock: 1,
+            selections: {
+                block1: {image: null, explanation: ""},
+                block2: {image: null, explanation: ""},
+                block3: {image: null, explanation: ""},
+                block4: {image: null, explanation: ""}
+            }
+        };
+
+        // Инициализация теста
+        document.addEventListener('DOMContentLoaded', function() {
+            // Заполняем изображения для каждого блока
+            for (let blockNum = 1; blockNum <= 4; blockNum++) {
+                const blockKey = `block${blockNum}`;
+                const container = document.getElementById(`images${blockNum}`);
+                
+                testData[blockKey].images.forEach((image, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'image-option';
+                    div.dataset.id = image.id;
+                    div.dataset.index = index;
+                    
+                    // Для реальных изображений замените этот блок на:
+                    // `<img src="images/${image.png}" alt="${image.name}" class="real-image">`
+                    div.innerHTML = `
+                        <div class="image-container">
+                            <div class="image-placeholder">
+                                <i class="fas ${image.icon}"></i>
+                            </div>
+                        </div>
+                        <div class="image-label">${image.name}</div>
+                    `;
+                    
+                    div.addEventListener('click', function() {
+                        selectImage(blockNum, image.id, index);
+                    });
+                    
+                    container.appendChild(div);
+                });
+            }
+            
+            // Обновляем прогресс
+            updateProgress();
+            
+            // Назначаем обработчики кнопок
+            document.getElementById('next1').addEventListener('click', () => navigateToBlock(2));
+            document.getElementById('next2').addEventListener('click', () => navigateToBlock(3));
+            document.getElementById('next3').addEventListener('click', () => navigateToBlock(4));
+            
+            document.getElementById('prev2').addEventListener('click', () => navigateToBlock(1));
+            document.getElementById('prev3').addEventListener('click', () => navigateToBlock(2));
+            document.getElementById('prev4').addEventListener('click', () => navigateToBlock(3));
+            
+            document.getElementById('submit').addEventListener('click', showResults);
+            document.getElementById('copyBtn').addEventListener('click', copyResultsToClipboard);
+            
+            // Обработчики для текстовых полей
+            document.getElementById('explanation1').addEventListener('input', function() {
+                state.selections.block1.explanation = this.value;
+            });
+            
+            document.getElementById('explanation2').addEventListener('input', function() {
+                state.selections.block2.explanation = this.value;
+            });
+            
+            document.getElementById('explanation3').addEventListener('input', function() {
+                state.selections.block3.explanation = this.value;
+            });
+            
+            document.getElementById('explanation4').addEventListener('input', function() {
+                state.selections.block4.explanation = this.value;
+            });
+        });
+
+        // Функция выбора изображения
+        function selectImage(blockNum, imageId, index) {
+            const blockKey = `block${blockNum}`;
+            state.selections[blockKey].image = imageId;
+            
+            // Сбрасываем выделение у всех изображений в блоке
+            const container = document.getElementById(`images${blockNum}`);
+            const images = container.querySelectorAll('.image-option');
+            images.forEach(img => img.classList.remove('selected'));
+            
+            // Выделяем выбранное изображение
+            images[index].classList.add('selected');
+        }
+
+        // Функция перехода между блоками
+        function navigateToBlock(blockNum) {
+            // Сохраняем объяснение текущего блока
+            const currentBlockKey = `block${state.currentBlock}`;
+            state.selections[currentBlockKey].explanation = document.getElementById(`explanation${state.currentBlock}`).value;
+            
+            // Скрываем текущий блок
+            document.getElementById(`block${state.currentBlock}`).classList.remove('active');
+            
+            // Показываем новый блок
+            document.getElementById(`block${blockNum}`).classList.add('active');
+            
+            // Восстанавливаем выбранное изображение в новом блоке
+            const newBlockKey = `block${blockNum}`;
+            if (state.selections[newBlockKey].image) {
+                const container = document.getElementById(`images${blockNum}`);
+                const images = container.querySelectorAll('.image-option');
+                images.forEach(img => {
+                    if (img.dataset.id === state.selections[newBlockKey].image) {
+                        img.classList.add('selected');
+                    }
+                });
+            }
+            
+            // Восстанавливаем объяснение
+            document.getElementById(`explanation${blockNum}`).value = state.selections[newBlockKey].explanation;
+            
+            // Обновляем текущий блок и прогресс
+            state.currentBlock = blockNum;
+            updateProgress();
+        }
+
+        // Функция обновления прогресс-бара
+        function updateProgress() {
+            const progress = (state.currentBlock / 4) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = `${state.currentBlock}/4`;
+        }
+
+        // Функция показа результатов
+        function showResults() {
+            // Сохраняем объяснение из последнего блока
+            state.selections.block4.explanation = document.getElementById('explanation4').value;
+            
+            // Проверяем, что все блоки заполнены
+            let allFilled = true;
+            for (let i = 1; i <= 4; i++) {
+                const blockKey = `block${i}`;
+                if (!state.selections[blockKey].image) {
+                    allFilled = false;
+                    alert(`Пожалуйста, выберите изображение в блоке ${i}`);
+                    navigateToBlock(i);
+                    return;
+                }
+            }
+            
+            // Скрываем последний блок и показываем результаты
+            document.getElementById('block4').classList.remove('active');
+            document.getElementById('results').style.display = 'block';
+            
+            // Генерируем результаты
+            generateResults();
+        }
+
+        // Функция генерации результатов
+        function generateResults() {
+            const resultsGrid = document.getElementById('resultsGrid');
+            resultsGrid.innerHTML = '';
+            
+            for (let i = 1; i <= 4; i++) {
+                const blockKey = `block${i}`;
+                const selection = state.selections[blockKey];
+                const blockData = testData[blockKey];
+                
+                // Находим информацию о выбранном изображении
+                const selectedImage = blockData.images.find(img => img.id === selection.image);
+                
+                const resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                
+                resultItem.innerHTML = `
+                    <div class="result-title">
+                        <i class="fas ${selectedImage.icon}"></i>
+                        ${blockData.title}
+                    </div>
+                    <div class="result-image-container">
+                        <div class="result-image">
+                            <i class="fas ${selectedImage.icon}"></i>
+                        </div>
+                    </div>
+                    <div class="result-selection" style="margin-bottom: 10px;">
+                        <strong>Выбор:</strong> ${selectedImage.name}<br>
+                        <small>Файл: ${selectedImage.png}</small>
+                    </div>
+                    <div class="result-explanation">
+                        <strong>Объяснение:</strong> ${selection.explanation || "Нет объяснения"}
+                    </div>
+                `;
+                
+                resultsGrid.appendChild(resultItem);
+            }
+        }
+
+        // Функция копирования результатов в буфер обмена
+        function copyResultsToClipboard() {
+            let resultsText = "РЕЗУЛЬТАТЫ ДРЕВНЕЕГИПЕТСКОГО ТЕСТА\n\n";
+            resultsText += "=".repeat(50) + "\n\n";
+            
+            for (let i = 1; i <= 4; i++) {
+                const blockKey = `block${i}`;
+                const selection = state.selections[blockKey];
+                const blockData = testData[blockKey];
+                const selectedImage = blockData.images.find(img => img.id === selection.image);
+                
+                resultsText += `БЛОК ${i}: ${blockData.title}\n`;
+                resultsText += `${blockData.description}\n`;
+                resultsText += `Выбранное изображение: ${selectedImage.name}\n`;
+                resultsText += `Файл изображения: ${selectedImage.png}\n`;
+                resultsText += `Объяснение выбора: ${selection.explanation || "Нет объяснения"}\n\n`;
+                resultsText += "-".repeat(40) + "\n\n";
+            }
+            
+            resultsText += "=".repeat(50) + "\n";
+            resultsText += "Тест создан в древнеегипетском стиле для самопознания и развития.";
+            
+            // Копируем в буфер обмена
+            navigator.clipboard.writeText(resultsText).then(() => {
+                // Показываем уведомление
+                const notification = document.getElementById('notification');
+                notification.style.display = 'block';
+                
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 3000);
+            });
+        }
+    </script>
+</body>
+</html>
