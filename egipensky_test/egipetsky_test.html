@@ -193,29 +193,18 @@
             overflow: hidden;
         }
 
-        .real-image, .image-placeholder {
+        .real-image {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.3s ease;
         }
 
-        .image-placeholder {
-            background: linear-gradient(45deg, var(--sand), var(--sky-blue));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--terracotta-dark);
-            font-size: 2.8rem;
-        }
-
-        /* Увеличение иконок для мониторов */
-        @media (min-width: 992px) {
-            .image-placeholder {
-                font-size: 3.5rem;
-            }
+        .image-option:hover .real-image {
+            transform: scale(1.05);
         }
 
         .image-label {
@@ -383,22 +372,13 @@
             overflow: hidden;
         }
 
-        .result-real-image, .result-image-placeholder {
+        .result-real-image {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
-
-        .result-image-placeholder {
-            background: linear-gradient(45deg, var(--sand), var(--sky-blue));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--terracotta-dark);
-            font-size: 3rem;
         }
 
         .result-explanation {
@@ -643,7 +623,7 @@
                 title: "Ваша главная суперсила",
                 description: "«Какая ваша суперсила наиболее активна?»",
                 images: [
-                    {id: "uvelichitelnoe_steklo", name: "Увеличительное стекло с деталями", icon: "fa-magnifying-glass", png: "uvelichitelnoe_steklo.png"},
+                    {id: "uvelichitelnoe_steklo", name: "Увеличительное стекло на деталях", icon: "fa-magnifying-glass", png: "uvelichitelnoe_steklo.png"},
                     {id: "golovolomka", name: "Головоломка, которая сходится", icon: "fa-brain", png: "golovolomka.png"},
                     {id: "rostok", name: "Росток, пробивающийся через асфальт", icon: "fa-seedling", png: "rostok.png"},
                     {id: "maski", name: "Набор масок на вешалке", icon: "fa-masks-theater", png: "maski.png"},
@@ -660,7 +640,7 @@
                 description: "«Что может незаметно для вас тормозить ваш рост?»",
                 images: [
                     {id: "stena_s_zerkalom", name: "Стена с зеркальной плиткой", icon: "fa-mirror", png: "stena_s_zerkalom.png"},
-                    {id: "chernaya_dura", name: "Черная дыра искривляет пространство", icon: "fa-circle", png: "chernaya_dura.png"},
+                    {id: "chernaya_dura", name: "Черная дыра вьлизи которой искривляется пространство", icon: "fa-circle", png: "chernaya_dura.png"},
                     {id: "karusel", name: "Карусель, крутящаяся по кругу", icon: "fa-horse", png: "karusel.png"},
                     {id: "ten_szadi", name: "Тень, которая всегда сзади", icon: "fa-ghost", png: "ten_szadi.png"},
                     {id: "podvodnoe_techenie", name: "Подводное течение, невидимое с поверхности", icon: "fa-water", png: "podvodnoe_techenie.png"},
@@ -684,9 +664,6 @@
             }
         };
 
-        // Флаг для использования реальных картинок или заглушек
-        const useRealImages = true; // Поставьте false, если хотите видеть заглушки вместо картинок
-
         // Инициализация теста
         document.addEventListener('DOMContentLoaded', function() {
             // Заполняем изображения для каждого блока
@@ -700,27 +677,13 @@
                     div.dataset.id = image.id;
                     div.dataset.index = index;
                     
-                    // Создаем элемент с реальной картинкой или заглушкой
-                    if (useRealImages) {
-                        div.innerHTML = `
-                            <div class="image-container">
-                                <img src="images/${image.png}" alt="${image.name}" class="real-image" onerror="this.style.display='none';">
-                                <div class="image-placeholder">
-                                    <i class="fas ${image.icon}"></i>
-                                </div>
-                            </div>
-                            <div class="image-label">${image.name}</div>
-                        `;
-                    } else {
-                        div.innerHTML = `
-                            <div class="image-container">
-                                <div class="image-placeholder">
-                                    <i class="fas ${image.icon}"></i>
-                                </div>
-                            </div>
-                            <div class="image-label">${image.name}</div>
-                        `;
-                    }
+                    // Создаем элемент с реальной картинкой
+                    div.innerHTML = `
+                        <div class="image-container">
+                            <img src="images/${image.png}" alt="${image.name}" class="real-image">
+                        </div>
+                        <div class="image-label">${image.name}</div>
+                    `;
                     
                     div.addEventListener('click', function() {
                         selectImage(blockNum, image.id, index);
@@ -858,25 +821,11 @@
                 resultItem.className = 'result-item';
                 
                 // Создаем изображение для результатов
-                let imageElement;
-                if (useRealImages) {
-                    imageElement = `
-                        <div class="result-image-container">
-                            <img src="images/${selectedImage.png}" alt="${selectedImage.name}" class="result-real-image" onerror="this.style.display='none';">
-                            <div class="result-image-placeholder">
-                                <i class="fas ${selectedImage.icon}"></i>
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    imageElement = `
-                        <div class="result-image-container">
-                            <div class="result-image-placeholder">
-                                <i class="fas ${selectedImage.icon}"></i>
-                            </div>
-                        </div>
-                    `;
-                }
+                const imageElement = `
+                    <div class="result-image-container">
+                        <img src="images/${selectedImage.png}" alt="${selectedImage.name}" class="result-real-image">
+                    </div>
+                `;
                 
                 resultItem.innerHTML = `
                     <div class="result-title">
@@ -885,8 +834,7 @@
                     </div>
                     ${imageElement}
                     <div class="result-selection" style="margin-bottom: 10px;">
-                        <strong>Выбор:</strong> ${selectedImage.name}<br>
-                        <small>Файл: ${selectedImage.png}</small>
+                        <strong>Выбор:</strong> ${selectedImage.name}
                     </div>
                     <div class="result-explanation">
                         <strong>Объяснение:</strong> ${selection.explanation || "Нет объяснения"}
@@ -911,7 +859,6 @@
                 resultsText += `БЛОК ${i}: ${blockData.title}\n`;
                 resultsText += `${blockData.description}\n`;
                 resultsText += `Выбранное изображение: ${selectedImage.name}\n`;
-                resultsText += `Файл изображения: ${selectedImage.png}\n`;
                 resultsText += `Объяснение выбора: ${selection.explanation || "Нет объяснения"}\n\n`;
                 resultsText += "-".repeat(40) + "\n\n";
             }
