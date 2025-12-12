@@ -115,14 +115,6 @@
             display: block;
             animation: fadeIn 0.8s ease;
         }
-        .real-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -201,12 +193,16 @@
             overflow: hidden;
         }
 
-        .image-placeholder {
+        .real-image, .image-placeholder {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            object-fit: cover;
+        }
+
+        .image-placeholder {
             background: linear-gradient(45deg, var(--sand), var(--sky-blue));
             display: flex;
             align-items: center;
@@ -387,12 +383,16 @@
             overflow: hidden;
         }
 
-        .result-image {
+        .result-real-image, .result-image-placeholder {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            object-fit: cover;
+        }
+
+        .result-image-placeholder {
             background: linear-gradient(45deg, var(--sand), var(--sky-blue));
             display: flex;
             align-items: center;
@@ -684,6 +684,9 @@
             }
         };
 
+        // Флаг для использования реальных картинок или заглушек
+        const useRealImages = true; // Поставьте false, если хотите видеть заглушки вместо картинок
+
         // Инициализация теста
         document.addEventListener('DOMContentLoaded', function() {
             // Заполняем изображения для каждого блока
@@ -697,14 +700,27 @@
                     div.dataset.id = image.id;
                     div.dataset.index = index;
                     
-                    // Для реальных изображений замените этот блок на:
-                    // `<img src="images/${image.png}" alt="${image.name}" class="real-image">`
-                    div.innerHTML = `
-                         <div class="image-container">
-                         <img src="images/${image.png}" alt="${image.name}" class="real-image">
+                    // Создаем элемент с реальной картинкой или заглушкой
+                    if (useRealImages) {
+                        div.innerHTML = `
+                            <div class="image-container">
+                                <img src="images/${image.png}" alt="${image.name}" class="real-image" onerror="this.style.display='none';">
+                                <div class="image-placeholder">
+                                    <i class="fas ${image.icon}"></i>
+                                </div>
                             </div>
-                         <div class="image-label">${image.name}</div>
-                    `;
+                            <div class="image-label">${image.name}</div>
+                        `;
+                    } else {
+                        div.innerHTML = `
+                            <div class="image-container">
+                                <div class="image-placeholder">
+                                    <i class="fas ${image.icon}"></i>
+                                </div>
+                            </div>
+                            <div class="image-label">${image.name}</div>
+                        `;
+                    }
                     
                     div.addEventListener('click', function() {
                         selectImage(blockNum, image.id, index);
@@ -841,16 +857,33 @@
                 const resultItem = document.createElement('div');
                 resultItem.className = 'result-item';
                 
+                // Создаем изображение для результатов
+                let imageElement;
+                if (useRealImages) {
+                    imageElement = `
+                        <div class="result-image-container">
+                            <img src="images/${selectedImage.png}" alt="${selectedImage.name}" class="result-real-image" onerror="this.style.display='none';">
+                            <div class="result-image-placeholder">
+                                <i class="fas ${selectedImage.icon}"></i>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    imageElement = `
+                        <div class="result-image-container">
+                            <div class="result-image-placeholder">
+                                <i class="fas ${selectedImage.icon}"></i>
+                            </div>
+                        </div>
+                    `;
+                }
+                
                 resultItem.innerHTML = `
                     <div class="result-title">
                         <i class="fas ${selectedImage.icon}"></i>
                         ${blockData.title}
                     </div>
-                    <div class="result-image-container">
-                        <div class="result-image">
-                            <i class="fas ${selectedImage.icon}"></i>
-                        </div>
-                    </div>
+                    ${imageElement}
                     <div class="result-selection" style="margin-bottom: 10px;">
                         <strong>Выбор:</strong> ${selectedImage.name}<br>
                         <small>Файл: ${selectedImage.png}</small>
