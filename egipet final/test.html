@@ -1,1 +1,1130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Египетская презентация: Архетипы помощи</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
+        body {
+            background: linear-gradient(135deg, #0a3d62 0%, #1a5c8c 30%, #2a7ba5 60%, #82ccdd 100%);
+            color: #f7f1e3;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Египетские украшения */
+        .egyptian-border {
+            position: absolute;
+            width: 100%;
+            height: 50px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="50" viewBox="0 0 120 50"><path d="M0,25 Q30,15 60,25 T120,25 L120,50 L0,50 Z" fill="%23d4ac0d"/><path d="M0,25 Q30,35 60,25 T120,25" stroke="%23b7950b" stroke-width="2" fill="none"/><circle cx="30" cy="25" r="3" fill="%23f7f1e3"/><circle cx="60" cy="25" r="3" fill="%23f7f1e3"/><circle cx="90" cy="25" r="3" fill="%23f7f1e3"/></svg>');
+            background-repeat: repeat-x;
+            z-index: 1;
+        }
+
+        .top-border {
+            top: 0;
+        }
+
+        .bottom-border {
+            bottom: 0;
+            transform: rotate(180deg);
+        }
+
+        .pyramid {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            opacity: 0.1;
+        }
+
+        .pyramid-1 {
+            border-width: 0 60px 100px 60px;
+            border-color: transparent transparent #d4ac0d transparent;
+            top: 10%;
+            left: 5%;
+        }
+
+        .pyramid-2 {
+            border-width: 0 40px 70px 40px;
+            border-color: transparent transparent #f7f1e3 transparent;
+            top: 15%;
+            right: 8%;
+        }
+
+        /* Основной контейнер */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Заголовок */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: rgba(10, 61, 98, 0.7);
+            border-radius: 15px;
+            border: 2px solid #d4ac0d;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #f7f1e3;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .header h1:after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background-color: #d4ac0d;
+            bottom: -5px;
+            left: 0;
+            border-radius: 3px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Этапы */
+        .stage {
+            display: none;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .stage.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Карточки архетипов */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: rgba(247, 241, 227, 0.9);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            color: #0a3d62;
+            border: 2px solid #d4ac0d;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-image {
+            height: 180px;
+            background-color: #1a5c8c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-image:after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(212, 172, 13, 0.2) 0%, transparent 100%);
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #0a3d62;
+            position: relative;
+            padding-bottom: 8px;
+        }
+
+        .card-title:after {
+            content: "";
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background-color: #d4ac0d;
+            bottom: 0;
+            left: 0;
+            border-radius: 3px;
+        }
+
+        .card-subtitle {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #b7950b;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            line-height: 1.6;
+            margin-bottom: 5px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .card-text:before {
+            content: "•";
+            color: #d4ac0d;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Формы и текстовые поля */
+        .question-section {
+            background-color: rgba(10, 61, 98, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 2px solid #d4ac0d;
+        }
+
+        .question-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #f7f1e3;
+        }
+
+        .question-description {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: #f7f1e3;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 2px solid #1a5c8c;
+            background-color: rgba(247, 241, 227, 0.9);
+            font-size: 1rem;
+            color: #0a3d62;
+            resize: vertical;
+            min-height: 80px;
+            transition: border-color 0.3s;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: #d4ac0d;
+        }
+
+        .archetype-select {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .archetype-option {
+            background-color: rgba(247, 241, 227, 0.9);
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            text-align: center;
+            color: #0a3d62;
+            font-weight: bold;
+        }
+
+        .archetype-option:hover {
+            transform: scale(1.03);
+            border-color: #d4ac0d;
+        }
+
+        .archetype-option.selected {
+            background-color: #d4ac0d;
+            color: #0a3d62;
+            border-color: #b7950b;
+        }
+
+        /* Контейнеры для дублируемых вопросов */
+        .question-container {
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: rgba(26, 92, 140, 0.6);
+            border-radius: 10px;
+            border: 1px solid #d4ac0d;
+        }
+
+        .question-item {
+            margin-bottom: 15px;
+        }
+
+        .question-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #f7f1e3;
+        }
+
+        .add-question-btn {
+            background-color: #d4ac0d;
+            color: #0a3d62;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .add-question-btn:hover {
+            background-color: #b7950b;
+            transform: scale(1.1);
+        }
+
+        .question-hint {
+            font-size: 0.9rem;
+            color: #82ccdd;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        .colleague-input-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .colleague-at {
+            font-size: 1.1rem;
+            color: #f7f1e3;
+            margin-right: 8px;
+            font-weight: bold;
+        }
+
+        .colleague-input {
+            flex: 1;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 2px solid #1a5c8c;
+            background-color: rgba(247, 241, 227, 0.9);
+            font-size: 1rem;
+            color: #0a3d62;
+            transition: border-color 0.3s;
+        }
+
+        .colleague-input:focus {
+            outline: none;
+            border-color: #d4ac0d;
+        }
+
+        .remove-colleague-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .remove-colleague-btn:hover {
+            background-color: #c0392b;
+            transform: scale(1.1);
+        }
+
+        /* Навигация */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-prev, .btn-next {
+            background-color: #1a5c8c;
+            color: #f7f1e3;
+            border: 2px solid #d4ac0d;
+        }
+
+        .btn-prev:hover, .btn-next:hover {
+            background-color: #0a3d62;
+            transform: translateY(-3px);
+        }
+
+        .btn-save {
+            background-color: #d4ac0d;
+            color: #0a3d62;
+            border: 2px solid #b7950b;
+        }
+
+        .btn-save:hover {
+            background-color: #b7950b;
+            transform: translateY(-3px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Индикатор прогресса */
+        .progress-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .progress-step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #1a5c8c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f7f1e3;
+            font-weight: bold;
+            margin: 0 15px;
+            position: relative;
+            border: 2px solid #d4ac0d;
+        }
+
+        .progress-step.active {
+            background-color: #d4ac0d;
+            color: #0a3d62;
+        }
+
+        .progress-step:not(:last-child):after {
+            content: "";
+            position: absolute;
+            width: 30px;
+            height: 3px;
+            background-color: #1a5c8c;
+            right: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Уведомление о копировании */
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #d4ac0d;
+            color: #0a3d62;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            display: none;
+            z-index: 100;
+            border: 2px solid #b7950b;
+        }
+
+        .notification.show {
+            display: block;
+            animation: slideIn 0.5s, fadeOut 0.5s 2.5s;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .container {
+                padding: 60px 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .archetype-select {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .progress-step:not(:last-child):after {
+                width: 20px;
+                right: -20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Египетские украшения -->
+    <div class="egyptian-border top-border"></div>
+    <div class="pyramid pyramid-1"></div>
+    <div class="pyramid pyramid-2"></div>
+    <div class="egyptian-border bottom-border"></div>
+
+    <!-- Основной контейнер -->
+    <div class="container">
+        <!-- Заголовок -->
+        <div class="header">
+            <h1><i class="fas fa-sun"></i> Архетипы помощи в команде</h1>
+            <p>Осознайте, как вы можете помогать друг другу на основе ваших архетипов и состояний. Пройдите три этапа самоанализа, чтобы определить свои сильные стороны и зоны роста.</p>
+        </div>
+
+        <!-- Индикатор прогресса -->
+        <div class="progress-container">
+            <div class="progress-step active">1</div>
+            <div class="progress-step">2</div>
+            <div class="progress-step">3</div>
+        </div>
+
+        <!-- Этап 1: Помощь коллегам -->
+        <div class="stage active" id="stage1">
+            <div class="question-section">
+                <h2 class="question-title">Цель: Осознать, как мы можем помогать друг другу на основе наших архетипов и состояний</h2>
+                <p class="question-description">Познакомьтесь с четырьмя архетипами и определите, в чем вы можете быть полезны своим коллегам.</p>
+            </div>
+
+            <!-- Карточки архетипов -->
+            <div class="cards-container">
+                <!-- Карточка 1: Наставник -->
+                <div class="card">
+                    <div class="card-image" style="background-color: #0a3d62;">
+                        <img src="images/nastavnik.png" alt="Наставник">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Наставник</h3>
+                        <div class="card-text">Могу выслушать и поддержать в сложный момент</div>
+                        <div class="card-text">Помогу разобраться в эмоциональных сложностях с операторами</div>
+                        <div class="card-text">Подскажу, как мягко давать обратную связь</div>
+                    </div>
+                </div>
+
+                <!-- Карточка 2: Мотиватор -->
+                <div class="card">
+                    <div class="card-image" style="background-color: #1a5c8c;">
+                        <img src="images/motivator.png" alt="Мотиватор">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Мотиватор</h3>
+                        <div class="card-text">Помогу навести порядок в процессах</div>
+                        <div class="card-text">Подскажу, как структурировать обучение</div>
+                        <div class="card-text">Помогу с контролем качества и метриками</div>
+                    </div>
+                </div>
+
+                <!-- Карточка 3: Инспектор -->
+                <div class="card">
+                    <div class="card-image" style="background-color: #2a7ba5;">
+                        <img src="images/inspector.png" alt="Инспектор">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Инспектор</h3>
+                        <div class="card-text">Заряжу энергией, когда коллега выгорает</div>
+                        <div class="card-text">Помогу придумать игровой элемент для скучной темы</div>
+                        <div class="card-text">Поддержу в моменты потери энтузиазма</div>
+                    </div>
+                </div>
+
+                <!-- Карточка 4: Аналитик -->
+                <div class="card">
+                    <div class="card-image" style="background-color: #82ccdd;">
+                        <img src="images/analitik.png" alt="Аналитик">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Аналитик</h3>
+                        <div class="card-text">Помогу проанализировать данные обучения</div>
+                        <div class="card-text">Подскажу, где найти корень проблемы</div>
+                        <div class="card-text">Помогу создать систему оценок эффективности</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Вопрос для пользователя -->
+            <div class="question-section">
+                <h2 class="question-title">1: Кому я могу быть помощником?</h2>
+                <p class="question-description">Основываясь на вашем архетипе из теста, отметьте, в чем вы особенно сильны и готовы помогать коллегам:</p>
+                
+                <div class="input-group">
+                    <div class="archetype-select">
+                        <div class="archetype-option" data-archetype="Наставник">Наставник</div>
+                        <div class="archetype-option" data-archetype="Мотиватор">Мотиватор</div>
+                        <div class="archetype-option" data-archetype="Инспектор">Инспектор</div>
+                        <div class="archetype-option" data-archetype="Аналитик">Аналитик</div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Запишите свой вариант помощи:</label>
+                    <textarea class="text-input" id="help-text" placeholder="Я, как [ваш архетип], могу помочь коллегам в:"></textarea>
+                </div>
+            </div>
+
+            <!-- Навигация -->
+            <div class="navigation">
+                <button class="btn btn-prev" disabled>
+                    <i class="fas fa-arrow-left"></i> Назад
+                </button>
+                <button class="btn btn-next" id="next1">
+                    Далее <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Этап 2: Зоны роста -->
+        <div class="stage" id="stage2">
+            <div class="question-section">
+                <h2 class="question-title">Зоны роста вашего архетипа</h2>
+                <p class="question-description">У каждого архетипа есть свои "слепые пятна" - зоны роста, которые важно осознавать для развития.</p>
+            </div>
+
+            <!-- Карточки архетипов с зонами роста -->
+            <div class="cards-container">
+                <!-- Карточка 1: Наставник -->
+                <div class="card">
+                    <div class="card-image" style="background-color: #0a3d62;">
+                        <img src="images/nastavnik.png" alt="Наставник">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Наставник</h3>
+                        <div class="card-subtitle">Зоны роста</div>
+                        <div class="card-text">Склонны брать на себя слишком много эмоциональной нагрузки</div>
+                        <div class="card-text">Может быть сложно устанавливать жесткие границы</div>
+                        <div class="card-text">Иногда ставите потребности команды выше собственных</div>
+                        <div class="card-text">Риск эмоционального выгорания из-за высокой вовлеченности</div>
+                    </div>
+                </div>
+
+                <!-- Карточка 2: Мотиватор -->
+                <div class="card">
+                    <div class="card-image" style="background-color: #1a5c8c;">
+                        <img src="images/motivator.png" alt="Мотиватор">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Мотиватор</h3>
+                        <div class="card-subtitle">Зоны роста</div>
+                        <div class="card-text">Может не хватать глубины проработки деталей</div>
+                        <div class="card-text">Склонны к перепадам энергии от подъема к спаду</div>
+                        <div class="card-text">Может быть сложно доводить начатое до идеального состояния</div>
+                        <div class="card-text">Риск выгорания из-за постоянной необходимости "гореть"</div>
+                    </div>
+                </div>
+
+                <!-- Карточка 3: Инспектор -->
+                <div class="card">
+                    <div class="card-image" style="background-color: #2a7ba5;">
+                        <img src="images/inspector.png" alt="Инспектор">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Инспектор</h3>
+                        <div class="card-subtitle">Зоны роста</div>
+                        <div class="card-text">Может не хватать гибкости в нестандартных ситуациях</div>
+                        <div class="card-text">Склонны к излишнему контролю и микроменеджменту</div>
+                        <div class="card-text">Может быть сложно принимать "человеческий фактор"</div>
+                        <div class="card-text">Риск выгорания из-за постоянного поддержания</div>
+                    </div>
+                </div>
+
+                <!-- Карточка 4: Аналитик -->
+                <div class="card">
+                    <div class="card-image" style="background-color: #82ccdd;">
+                        <img src="images/analitik.png" alt="Аналитик">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Аналитик</h3>
+                        <div class="card-subtitle">Зоны роста</div>
+                        <div class="card-text">Может уходить в излишнюю детализацию</div>
+                        <div class="card-text">Склонны к перфекционизму и затягиванию решений</div>
+                        <div class="card-text">Может быть сложно работать в условиях неопределенности</div>
+                        <div class="card-text">Риск выгорания из-за ментальной перегрузки</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Вопрос для пользователя -->
+            <div class="question-section">
+                <h2 class="question-title">Выпишите свои "слепые" пятна</h2>
+                <p class="question-description">На основе представленных зон роста для вашего архетипа, определите, какие из них наиболее актуальны для вас.</p>
+                
+                <div class="input-group">
+                    <label class="input-label">Мои "слепые" пятна:</label>
+                    <textarea class="text-input" id="blind-spots" placeholder="Опишите свои зоны роста и "слепые" пятна..."></textarea>
+                </div>
+            </div>
+
+            <!-- Навигация -->
+            <div class="navigation">
+                <button class="btn btn-prev" id="prev2">
+                    <i class="fas fa-arrow-left"></i> Назад
+                </button>
+                <button class="btn btn-next" id="next2">
+                    Далее <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Этап 3: Обращение за помощью -->
+        <div class="stage" id="stage3">
+            <div class="question-section">
+                <h2 class="question-title">2: К кому и с чем я могу обратиться?</h2>
+                <p class="question-description">Посмотрите на свои «слепые пятна» из диагностики. Кто из коллег мог бы помочь вам с ними?</p>
+                <p class="question-description">Из результатов теста коллег я знаю, что:</p>
+            </div>
+
+            <!-- Вопрос 1: Коллеги, сильные в моих слабостях -->
+            <div class="question-container" id="question1-container">
+                <div class="question-header">
+                    <div class="question-text">Коллеги, сильные в том, в чем я слаб</div>
+                    <button class="add-question-btn" data-question="1" title="Добавить еще одного коллегу">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <p class="question-hint">Нажмите "+", чтобы добавить еще одно имя коллеги</p>
+                
+                <div class="question-item" id="question1-items">
+                    <!-- Первое поле будет добавлено динамически -->
+                </div>
+            </div>
+
+            <!-- Вопрос 2: Коллеги с противоположным архетипом -->
+            <div class="question-container" id="question2-container">
+                <div class="question-header">
+                    <div class="question-text">Коллеги с противоположным архетипом, которые могут дополнить</div>
+                    <button class="add-question-btn" data-question="2" title="Добавить еще одного коллегу">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <p class="question-hint">Нажмите "+", чтобы добавить еще одно имя коллеги</p>
+                
+                <div class="question-item" id="question2-items">
+                    <!-- Первое поле будет добавлено динамически -->
+                </div>
+            </div>
+
+            <!-- Вопрос 3: Коллеги в ресурсном состоянии -->
+            <div class="question-container" id="question3-container">
+                <div class="question-header">
+                    <div class="question-text">Коллеги в ресурсном состоянии, которые могут поддержать</div>
+                    <button class="add-question-btn" data-question="3" title="Добавить еще одного коллегу">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <p class="question-hint">Нажмите "+", чтобы добавить еще одно имя коллеги</p>
+                
+                <div class="question-item" id="question3-items">
+                    <!-- Первое поле будет добавлено динамически -->
+                </div>
+            </div>
+
+            <!-- Кнопка сохранения -->
+            <div class="navigation">
+                <button class="btn btn-prev" id="prev3">
+                    <i class="fas fa-arrow-left"></i> Назад
+                </button>
+                <button class="btn btn-save" id="save-btn">
+                    <i class="fas fa-copy"></i> Сохранить и поделиться
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Уведомление о копировании -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i> Данные скопированы в буфер обмена!
+    </div>
+
+    <script>
+        // Данные пользователя
+        const userData = {
+            archetype: "",
+            helpText: "",
+            blindSpots: "",
+            strongColleagues: [],
+            oppositeColleagues: [],
+            resourceColleagues: []
+        };
+
+        // Элементы DOM
+        const stages = document.querySelectorAll('.stage');
+        const progressSteps = document.querySelectorAll('.progress-step');
+        const nextButtons = document.querySelectorAll('.btn-next');
+        const prevButtons = document.querySelectorAll('.btn-prev');
+        const archetypeOptions = document.querySelectorAll('.archetype-option');
+        const saveButton = document.getElementById('save-btn');
+        const notification = document.getElementById('notification');
+        
+        // Текущий этап
+        let currentStage = 0;
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            // Выбор архетипа
+            archetypeOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Снять выделение со всех опций
+                    archetypeOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Выделить выбранную опцию
+                    this.classList.add('selected');
+                    
+                    // Сохранить выбранный архетип
+                    userData.archetype = this.dataset.archetype;
+                    
+                    // Обновить текстовое поле
+                    const helpText = document.getElementById('help-text');
+                    if (helpText.value === '') {
+                        helpText.value = `Я, как ${userData.archetype}, могу помочь коллегам в:`;
+                    }
+                });
+            });
+            
+            // Переход к следующему этапу
+            nextButtons.forEach(button => {
+                button.addEventListener('click', goToNextStage);
+            });
+            
+            // Переход к предыдущему этапу
+            prevButtons.forEach(button => {
+                button.addEventListener('click', goToPrevStage);
+            });
+            
+            // Сохранение данных
+            saveButton.addEventListener('click', saveData);
+            
+            // Автосохранение текстовых полей
+            document.getElementById('help-text').addEventListener('input', function() {
+                userData.helpText = this.value;
+            });
+            
+            document.getElementById('blind-spots').addEventListener('input', function() {
+                userData.blindSpots = this.value;
+            });
+            
+            // Инициализация третьего этапа с дублируемыми вопросами
+            initQuestionStage();
+            
+            // Добавление первых полей для каждого вопроса
+            addColleagueInput(1);
+            addColleagueInput(2);
+            addColleagueInput(3);
+            
+            // Обработчики для кнопок добавления вопросов
+            document.querySelectorAll('.add-question-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const questionType = this.dataset.question;
+                    addColleagueInput(questionType);
+                });
+            });
+        });
+
+        // Инициализация третьего этапа
+        function initQuestionStage() {
+            // Очищаем массивы данных
+            userData.strongColleagues = [];
+            userData.oppositeColleagues = [];
+            userData.resourceColleagues = [];
+        }
+
+        // Добавление поля для ввода имени коллеги
+        function addColleagueInput(questionType) {
+            const containerId = `question${questionType}-items`;
+            const container = document.getElementById(containerId);
+            
+            // Создаем контейнер для поля ввода
+            const inputContainer = document.createElement('div');
+            inputContainer.className = 'colleague-input-container';
+            
+            // Создаем символ @
+            const atSymbol = document.createElement('span');
+            atSymbol.className = 'colleague-at';
+            atSymbol.textContent = '@';
+            
+            // Создаем поле ввода
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'colleague-input';
+            input.placeholder = 'Введите имя коллеги';
+            
+            // Создаем кнопку удаления
+            const removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.className = 'remove-colleague-btn';
+            removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+            removeBtn.title = 'Удалить это поле';
+            
+            // Добавляем обработчик удаления
+            removeBtn.addEventListener('click', function() {
+                // Удаляем только если есть больше одного поля
+                const inputs = container.querySelectorAll('.colleague-input-container');
+                if (inputs.length > 1) {
+                    inputContainer.remove();
+                    // Обновляем данные
+                    updateColleagueData(questionType);
+                } else {
+                    alert('Должно остаться хотя бы одно поле для ввода');
+                }
+            });
+            
+            // Добавляем обработчик изменения значения
+            input.addEventListener('input', function() {
+                updateColleagueData(questionType);
+            });
+            
+            // Собираем все элементы вместе
+            inputContainer.appendChild(atSymbol);
+            inputContainer.appendChild(input);
+            inputContainer.appendChild(removeBtn);
+            
+            // Добавляем в контейнер
+            container.appendChild(inputContainer);
+            
+            // Обновляем данные
+            updateColleagueData(questionType);
+        }
+
+        // Обновление данных о коллегах
+        function updateColleagueData(questionType) {
+            const containerId = `question${questionType}-items`;
+            const container = document.getElementById(containerId);
+            const inputs = container.querySelectorAll('.colleague-input');
+            
+            // Получаем значения всех полей
+            const values = Array.from(inputs).map(input => input.value.trim()).filter(value => value !== '');
+            
+            // Сохраняем в соответствующий массив
+            if (questionType === '1') {
+                userData.strongColleagues = values;
+            } else if (questionType === '2') {
+                userData.oppositeColleagues = values;
+            } else if (questionType === '3') {
+                userData.resourceColleagues = values;
+            }
+        }
+
+        // Функция перехода к следующему этапу
+        function goToNextStage() {
+            // Проверка заполнения полей для текущего этапа
+            if (currentStage === 0) {
+                if (!userData.archetype || !userData.helpText.trim()) {
+                    alert('Пожалуйста, выберите архетип и заполните поле с описанием помощи');
+                    return;
+                }
+            } else if (currentStage === 1) {
+                if (!userData.blindSpots.trim()) {
+                    alert('Пожалуйста, заполните поле с описанием ваших "слепых" пятен');
+                    return;
+                }
+            }
+            
+            // Скрыть текущий этап
+            stages[currentStage].classList.remove('active');
+            progressSteps[currentStage].classList.remove('active');
+            
+            // Перейти к следующему этапу
+            currentStage++;
+            stages[currentStage].classList.add('active');
+            progressSteps[currentStage].classList.add('active');
+            
+            // Прокрутка к верху страницы
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Функция перехода к предыдущему этапу
+        function goToPrevStage() {
+            // Скрыть текущий этап
+            stages[currentStage].classList.remove('active');
+            progressSteps[currentStage].classList.remove('active');
+            
+            // Перейти к предыдущему этапу
+            currentStage--;
+            stages[currentStage].classList.add('active');
+            progressSteps[currentStage].classList.add('active');
+            
+            // Прокрутка к верху страницы
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Функция сохранения данных
+        function saveData() {
+            // Проверка заполнения полей
+            const hasStrongColleagues = userData.strongColleagues.length > 0;
+            const hasOppositeColleagues = userData.oppositeColleagues.length > 0;
+            const hasResourceColleagues = userData.resourceColleagues.length > 0;
+            
+            if (!hasStrongColleagues && !hasOppositeColleagues && !hasResourceColleagues) {
+                alert('Пожалуйста, заполните хотя бы одно поле с именами коллег');
+                return;
+            }
+            
+            // Формирование текста для копирования
+            let resultText = "РЕЗУЛЬТАТЫ АНАЛИЗА АРХЕТИПОВ ПОМОЩИ\n";
+            resultText += "=".repeat(40) + "\n\n";
+            
+            resultText += "1. МОЙ АРХЕТИП И ПОМОЩЬ КОЛЛЕГАМ:\n";
+            resultText += "-".repeat(35) + "\n";
+            resultText += `Архетип: ${userData.archetype}\n`;
+            resultText += `Чем могу помочь: ${userData.helpText}\n\n`;
+            
+            resultText += "2. МОИ СЛЕПЫЕ ПЯТНА И ЗОНЫ РОСТА:\n";
+            resultText += "-".repeat(35) + "\n";
+            resultText += `${userData.blindSpots}\n\n`;
+            
+            resultText += "3. К КОМУ Я МОГУ ОБРАТИТЬСЯ ЗА ПОМОЩЬЮ:\n";
+            resultText += "-".repeat(35) + "\n";
+            
+            if (hasStrongColleagues) {
+                const colleaguesList = userData.strongColleagues.map(name => `@${name}`).join(', ');
+                resultText += `• ${colleaguesList} ${userData.strongColleagues.length > 1 ? 'сильны' : 'силен'} в том, в чем я слаб.\n`;
+            }
+            
+            if (hasOppositeColleagues) {
+                const colleaguesList = userData.oppositeColleagues.map(name => `@${name}`).join(', ');
+                resultText += `• ${colleaguesList} ${userData.oppositeColleagues.length > 1 ? 'имеют' : 'имеет'} противоположный мне архетип и ${userData.oppositeColleagues.length > 1 ? 'могут' : 'может'} дополнить.\n`;
+            }
+            
+            if (hasResourceColleagues) {
+                const colleaguesList = userData.resourceColleagues.map(name => `@${name}`).join(', ');
+                resultText += `• ${colleaguesList} ${userData.resourceColleagues.length > 1 ? 'сейчас в ресурсном состоянии и могут' : 'сейчас в ресурсном состоянии и может'} поддержать.\n`;
+            }
+            
+            resultText += "\n" + "=".repeat(40) + "\n";
+            resultText += "Презентация 'Архетипы помощи' в египетском стиле\n";
+            resultText += "Создано для командного взаимодействия и взаимопомощи";
+            
+            // Копирование в буфер обмена
+            navigator.clipboard.writeText(resultText)
+                .then(() => {
+                    // Показать уведомление
+                    notification.classList.add('show');
+                    
+                    // Скрыть уведомление через 3 секунды
+                    setTimeout(() => {
+                        notification.classList.remove('show');
+                    }, 3000);
+                })
+                .catch(err => {
+                    console.error('Ошибка при копировании: ', err);
+                    
+                    // Альтернативный метод для старых браузеров
+                    const textArea = document.createElement('textarea');
+                    textArea.value = resultText;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    
+                    try {
+                        const successful = document.execCommand('copy');
+                        if (successful) {
+                            notification.classList.add('show');
+                            setTimeout(() => {
+                                notification.classList.remove('show');
+                            }, 3000);
+                        } else {
+                            alert('Не удалось скопировать данные. Попробуйте выделить текст и скопировать вручную:\n\n' + resultText);
+                        }
+                    } catch (err) {
+                        alert('Не удалось скопировать данные. Попробуйте выделить текст и скопировать вручную:\n\n' + resultText);
+                    }
+                    
+                    document.body.removeChild(textArea);
+                });
+        }
+    </script>
+</body>
+</html>
