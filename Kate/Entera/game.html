@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тыкай в кружки</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e2b3a, #0f1a24);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        .game-container {
+            background: #243b4a;
+            border-radius: 2rem;
+            padding: 1.5rem;
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.6), inset 0 0 8px #4e7b99;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            background: #1d2e3a;
+            padding: 0.8rem 1.5rem;
+            border-radius: 3rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            box-shadow: inset 0 2px 5px #0b151d, 0 5px 0 #0f1a22;
+        }
+
+        .score, .timer {
+            background: #0e1a24;
+            padding: 0.3rem 1.2rem;
+            border-radius: 2rem;
+            box-shadow: inset 0 1px 4px #5a7e9b;
+        }
+
+        .play-area {
+            position: relative;
+            width: 700px;
+            height: 400px;
+            background: #1b2e3f;
+            border-radius: 2rem;
+            box-shadow: inset 0 0 20px #0a141e, 0 10px 10px rgba(0,0,0,0.5);
+            overflow: hidden;
+            cursor: crosshair;
+            border: 3px solid #3f627c;
+        }
+
+        .circle {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle at 30% 30%, #ffd966, #e68900);
+            border-radius: 50%;
+            box-shadow: 0 6px 0 #a45d00, 0 10px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            will-change: transform;
+        }
+
+        .circle:hover {
+            transform: scale(1.1);
+            background: radial-gradient(circle at 30% 30%, #ffe085, #ffa500);
+            box-shadow: 0 8px 0 #b36b00, 0 15px 20px rgba(0,0,0,0.4);
+        }
+
+        .circle:active {
+            transform: scale(0.95);
+            box-shadow: 0 3px 0 #a45d00, 0 8px 10px rgba(0,0,0,0.3);
+        }
+
+        .game-over-message {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 20, 30, 0.85);
+            backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            border-radius: 2rem;
+            z-index: 10;
+            text-shadow: 2px 2px 0 #0a121b;
+        }
+
+        .game-over-message p {
+            margin: 0.5rem 0;
+        }
+
+        .final-score {
+            font-size: 3.5rem;
+            color: #ffd966;
+        }
+
+        .new-game-btn {
+            background: #f4b642;
+            border: none;
+            color: #1d2e3a;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 0.8rem 2rem;
+            border-radius: 3rem;
+            margin-top: 1rem;
+            box-shadow: 0 7px 0 #b16f1a, 0 10px 20px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: 0.07s ease;
+        }
+
+        .new-game-btn:active {
+            transform: translateY(5px);
+            box-shadow: 0 2px 0 #b16f1a, 0 8px 15px rgba(0,0,0,0.3);
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="stats">
+            <div class="score">💯 <span id="scoreDisplay">0</span></div>
+            <div class="timer">⏳ <span id="timerDisplay">30</span>с</div>
+        </div>
+
+        <div class="play-area" id="playArea">
+            <!-- сюда динамически добавляются кружки -->
+            <div id="gameOverlay" class="game-over-message hidden">
+                <p>Игра окончена!</p>
+                <p class="final-score" id="finalScore">0</p>
+                <button class="new-game-btn" id="restartBtn">🍩 Новая игра</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ----- Элементы DOM -----
+            const playArea = document.getElementById('playArea');
+            const scoreSpan = document.getElementById('scoreDisplay');
+            const timerSpan = document.getElementById('timerDisplay');
+            const gameOverlay = document.getElementById('gameOverlay');
+            const finalScoreSpan = document.getElementById('finalScore');
+            const restartBtn = document.getElementById('restartBtn');
+
+            // ----- Параметры игры -----
+            const INIT_TIME = 30;           // секунд
+            const CIRCLE_LIFETIME = 3000;    // мс (3 секунды)
+            const SPAWN_INTERVAL = 1000;      // мс (1 круг в секунду)
+
+            // ----- Состояние игры -----
+            let score = 0;
+            let timeLeft = INIT_TIME;
+            let gameActive = false;           // true – игра идёт
+            let timerInterval = null;
+            let spawnInterval = null;
+
+            // Храним все активные таймеры удаления кружков, чтобы можно было их отменить при клике
+            // (можно хранить прямо в элементе через data, но для удобства сборки при сбросе очистим все)
+            // Используем массив для всех setTimeOut, чтобы при рестарте их убить.
+            let circleTimeouts = [];
+
+            // ----- Вспомогательные функции -----
+
+            // Очистить все запланированные таймеры удаления кружков
+            function clearAllCircleTimeouts() {
+                circleTimeouts.forEach(timeout => clearTimeout(timeout));
+                circleTimeouts = [];
+            }
+
+            // Остановить все интервалы (таймер и спавн)
+            function stopAllIntervals() {
+                if (timerInterval) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                }
+                if (spawnInterval) {
+                    clearInterval(spawnInterval);
+                    spawnInterval = null;
+                }
+            }
+
+            // Удалить все кружки с поля
+            function removeAllCircles() {
+                const circles = playArea.querySelectorAll('.circle');
+                circles.forEach(circle => circle.remove());
+                clearAllCircleTimeouts(); // таймеры больше не нужны
+            }
+
+            // Обновить счёт на экране
+            function updateScoreDisplay() {
+                scoreSpan.textContent = score;
+            }
+
+            // Обновить таймер на экране
+            function updateTimerDisplay() {
+                timerSpan.textContent = timeLeft;
+            }
+
+            // Завершение игры (остановка всего, показ экрана с результатом)
+            function endGame() {
+                gameActive = false;
+                stopAllIntervals();
+
+                // Удаляем все кружки (они больше не нужны, да и кликать по ним нельзя)
+                removeAllCircles();
+
+                // Показываем оверлей
+                finalScoreSpan.textContent = score;
+                gameOverlay.classList.remove('hidden');
+            }
+
+            // Запуск новой игры
+            function startNewGame() {
+                // Сброс состояния
+                gameActive = true;
+                score = 0;
+                timeLeft = INIT_TIME;
+                updateScoreDisplay();
+                updateTimerDisplay();
+
+                // Спрятать оверлей
+                gameOverlay.classList.add('hidden');
+
+                // Очистить поле от старых кружков и таймеров
+                removeAllCircles();
+
+                // Остановить старые интервалы (на всякий случай)
+                stopAllIntervals();
+
+                // Запустить отсчёт времени
+                timerInterval = setInterval(() => {
+                    if (!gameActive) return; // защита
+
+                    timeLeft -= 1;
+                    updateTimerDisplay();
+
+                    if (timeLeft <= 0) {
+                        timeLeft = 0;
+                        updateTimerDisplay();
+                        endGame();
+                    }
+                }, 1000);
+
+                // Запустить спавн кружков
+                spawnInterval = setInterval(() => {
+                    if (!gameActive) return; // если игра окончена, не создаём новые кружки
+                    createCircle();
+                }, SPAWN_INTERVAL);
+
+                // Сразу создадим первый кружок, чтобы не ждать секунду
+                createCircle();
+            }
+
+            // Создание одного кружка в случайном месте
+            function createCircle() {
+                if (!gameActive) return; // лишняя проверка
+
+                const circle = document.createElement('div');
+                circle.className = 'circle';
+
+                // Случайные координаты в пределах playArea (с учётом размера кружка 50x50)
+                const maxLeft = playArea.clientWidth - 50;
+                const maxTop = playArea.clientHeight - 50;
+
+                // Защита от отрицательных значений, если контейнер вдруг меньше 50px (но у нас 700x400)
+                const left = Math.max(0, Math.floor(Math.random() * maxLeft));
+                const top = Math.max(0, Math.floor(Math.random() * maxTop));
+
+                circle.style.left = left + 'px';
+                circle.style.top = top + 'px';
+
+                // Обработчик клика
+                circle.addEventListener('click', function onClick(event) {
+                    event.stopPropagation(); // не всплывает, но на всякий случай
+                    if (!gameActive) return; // если игра уже не активна, игнорируем
+
+                    // Увеличиваем счёт
+                    score += 1;
+                    updateScoreDisplay();
+
+                    // Удаляем кружок и отменяем его таймер самоуничтожения
+                    const timeoutId = circle.dataset.timeoutId;
+                    if (timeoutId) {
+                        clearTimeout(Number(timeoutId));
+                        // Удаляем из массива circleTimeouts
+                        circleTimeouts = circleTimeouts.filter(id => id !== Number(timeoutId));
+                    }
+
+                    // Удаляем элемент из DOM
+                    circle.remove();
+                });
+
+                // Добавляем на поле
+                playArea.appendChild(circle);
+
+                // Ставим таймер на удаление (если не кликнули)
+                const timeoutId = setTimeout(() => {
+                    // Проверяем, существует ли ещё этот кружок и активна ли игра (кружок может быть уже удалён)
+                    if (circle.parentNode) {
+                        circle.remove(); // убираем с поля
+                    }
+                    // Убираем этот timeout из массива
+                    circleTimeouts = circleTimeouts.filter(id => id !== timeoutId);
+                }, CIRCLE_LIFETIME);
+
+                // Сохраняем id таймера в data-атрибут и в массив
+                circle.dataset.timeoutId = timeoutId;
+                circleTimeouts.push(timeoutId);
+            }
+
+            // Обработчик на кнопку "Новая игра"
+            restartBtn.addEventListener('click', () => {
+                startNewGame();
+            });
+
+            // Инициализация: сразу запускаем игру при загрузке страницы
+            startNewGame();
+
+            // Небольшая дополнительная защита: при клике на саму область не происходит ничего лишнего
+            playArea.addEventListener('click', (e) => {
+                // Если кликнули на пустое место (не на кружок) – ничего не делаем
+                // Можно добавить звук или что‑то ещё, но не нужно.
+            });
+
+        })();
+    </script>
+</body>
+</html>
